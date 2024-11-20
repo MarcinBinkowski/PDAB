@@ -1,0 +1,64 @@
+<UserControl x:Class="PDAB.Views.AddOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <materialDesign:Card Margin="16" Padding="32">
+        <StackPanel>
+            <TextBlock Text="{Binding DisplayName}"
+                      Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                      Margin="0,0,0,32"/>
+
+            <TextBlock Text="Customer"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectCustomerCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <ComboBox ItemsSource="{Binding Customers}"
+                         SelectedItem="{Binding Entity.Customer}"
+                         DisplayMemberPath="LastName"
+                         Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                         materialDesign:HintAssist.Hint="Select customer"/>
+            </DockPanel>
+
+            <TextBlock Text="Order Status"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectOrderStatusCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <ComboBox ItemsSource="{Binding OrderStatuses}"
+                         SelectedItem="{Binding Entity.OrderStatus}"
+                         DisplayMemberPath="StatusName"
+                         Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                         materialDesign:HintAssist.Hint="Select status"/>
+            </DockPanel>
+
+            <TextBlock Text="Order Date"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DatePicker SelectedDate="{Binding Entity.OrderDate}"
+                       Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                       Margin="0,8,0,16"/>
+
+
+            <Button Command="{Binding SaveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSave" 
+                                           Margin="0,0,8,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </materialDesign:Card>
+</UserControl>

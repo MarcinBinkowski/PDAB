@@ -1,0 +1,79 @@
+<UserControl x:Class="PDAB.Views.AddProductView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <materialDesign:Card Margin="16" Padding="32">
+        <StackPanel>
+            <TextBlock Text="{Binding DisplayName}"
+                      Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                      Margin="0,0,0,32"/>
+
+            <TextBlock Text="Product Name"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox Text="{Binding Entity.ProductName, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter product name"
+                    Margin="0,8,0,16"/>
+
+            <TextBlock Text="Category"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectCategoryCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <ComboBox ItemsSource="{Binding Categories}"
+                         SelectedItem="{Binding Entity.Category}"
+                         DisplayMemberPath="CategoryName"
+                         Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                         materialDesign:HintAssist.Hint="Select category"/>
+            </DockPanel>
+
+            <TextBlock Text="Manufacturer"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectManufacturerCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <ComboBox ItemsSource="{Binding Manufacturers}"
+                         SelectedItem="{Binding Entity.Manufacturer}"
+                         DisplayMemberPath="ManufacturerName"
+                         Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                         materialDesign:HintAssist.Hint="Select manufacturer"/>
+            </DockPanel>
+
+            <TextBlock Text="Description"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox Text="{Binding Entity.Description, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter description"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    Height="80"
+                    Margin="0,8,0,16"/>
+
+            <TextBlock Text="Unit Price"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox Text="{Binding Entity.UnitPrice, StringFormat=C}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter unit price"
+                    Margin="0,8,0,32"/>
+
+            <Button Command="{Binding SaveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSave" 
+                                           Margin="0,0,8,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </materialDesign:Card>
+</UserControl>

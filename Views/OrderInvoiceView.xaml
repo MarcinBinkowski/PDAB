@@ -1,0 +1,73 @@
+<UserControl x:Class="PDAB.Views.OrderInvoiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Select Customer"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <ComboBox ItemsSource="{Binding Customers}"
+                     SelectedItem="{Binding SelectedCustomer}"
+                     DisplayMemberPath="Email"
+                     Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                     Margin="0,8,0,16"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding CustomerOrders}"
+                  SelectedItem="{Binding SelectedOrder}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="0,0,0,16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Order ID" 
+                                  Binding="{Binding OrderId}"/>
+                <DataGridTextColumn Header="Date" 
+                                  Binding="{Binding OrderDate, StringFormat=d}"/>
+                <DataGridTextColumn Header="Status" 
+                                  Binding="{Binding OrderStatus.StatusName}"/>
+                <DataGridTextColumn Header="Total" 
+                                  Binding="{Binding Total, StringFormat=C}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right">
+            <Button Command="{Binding PreviewInvoiceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Margin="8,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FileEye" 
+                                             Margin="0,0,8,0"/>
+                    <TextBlock Text="Preview"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding SaveInvoiceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Margin="8,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FileDownload" 
+                                             Margin="0,0,8,0"/>
+                    <TextBlock Text="Save Invoice"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding SendInvoiceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Margin="8,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="EmailSend" 
+                                             Margin="0,0,8,0"/>
+                    <TextBlock Text="Send Invoice"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

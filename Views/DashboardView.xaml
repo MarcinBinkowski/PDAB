@@ -1,0 +1,255 @@
+<UserControl x:Class="PDAB.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:PDAB.Converters"
+             xmlns:local="clr-namespace:PDAB.ViewModels">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+        <converters:AmountTLengthConverter x:Key="AmountTLengthConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="16">
+        <TabControl>
+            <!-- Top Products tab -->
+            <TabItem Header="Top Products">
+                <ScrollViewer Margin="16">
+                    <StackPanel>
+                        <!-- Date pickers row -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Start Date" 
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="End Date" 
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Width="280" Margin="0,0,16,0">
+                                <CheckBox Content="Filter top products"
+                                        IsChecked="{Binding IsTopProductsFiltered}"
+                                        Style="{StaticResource MaterialDesignCheckBox}"/>
+                                <StackPanel Margin="0,8,0,0"
+                                          Visibility="{Binding IsTopProductsFiltered, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Hidden}">
+                                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}">
+                                        <Run Text="Show top "/>
+                                        <Run Text="{Binding TopCount}"/>
+                                        <Run Text=" items"/>
+                                    </TextBlock>
+                                    <Slider Value="{Binding TopCount, Mode=TwoWay}"
+                                           Minimum="1"
+                                           Maximum="10"
+                                           TickFrequency="1"
+                                           TickPlacement="BottomRight"
+                                           IsSnapToTickEnabled="True"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <materialDesign:Card>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="Top Products" 
+                                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                         Margin="0,0,0,16"/>
+                                <DataGrid ItemsSource="{Binding DashboardSummary.TopProducts}"
+                                        AutoGenerateColumns="False"
+                                        IsReadOnly="True"
+                                        Height="200">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Product"
+                                                          Binding="{Binding ProductName}"/>
+                                        <DataGridTextColumn Header="Total Sales"
+                                                          Binding="{Binding TotalSales, StringFormat=C}"/>
+                                        <DataGridTextColumn Header="Sold Quantity"
+                                                          Binding="{Binding SoldQuantity}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Sales tab -->
+            <TabItem Header="Sales">
+                    <StackPanel>
+                        <!-- Date pickers row + group option -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Start Date" 
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="End Date" 
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Group by"
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <ComboBox ItemsSource="{Binding GroupOptions}"
+                                        SelectedItem="{Binding SelectedGroupOption}"
+                                        Width="120"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Chart Type"
+                                         Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <RadioButton GroupName="ChartTypeGroup"
+                                               Content="Bar Chart"
+                                               IsChecked="{Binding SelectedChartType, 
+                                                         Mode=TwoWay,
+                                                         Converter={StaticResource EnumToBooleanConverter},
+                                                         ConverterParameter=Bar}"
+                                               Margin="0,0,16,0"/>
+                                    <RadioButton GroupName="ChartTypeGroup"
+                                               Content="Column Chart"
+                                               IsChecked="{Binding SelectedChartType, 
+                                                         Mode=TwoWay,
+                                                         Converter={StaticResource EnumToBooleanConverter},
+                                                         ConverterParameter=Column}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Basic stats -->
+                        <WrapPanel>
+                            <materialDesign:Card Width="280" Margin="8">
+                                <StackPanel Margin="16">
+                                    <TextBlock Text="Total Orders" 
+                                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                                    <TextBlock Text="{Binding DashboardSummary.TotalOrders}" 
+                                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                                             Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+
+                            <materialDesign:Card Width="280" Margin="8">
+                                <StackPanel Margin="16">
+                                    <TextBlock Text="Total Amount" 
+                                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                                    <TextBlock Text="{Binding DashboardSummary.TotalAmount, StringFormat=C}" 
+                                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                                             Foreground="{DynamicResource SecondaryHueMidBrush}"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </WrapPanel>
+
+                        <!-- Charts -->
+                        <TextBlock Text="Grouped Sales" 
+                                 Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                 Margin="0,16,0,8"/>
+
+                        <Grid>
+                            <!-- Bar Chart View -->
+                            <ItemsControl ItemsSource="{Binding DashboardSummary.MonthlySales}">
+                                <ItemsControl.Style>
+                                    <Style TargetType="ItemsControl">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedChartType}" Value="Bar">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="2">
+                                            <TextBlock Text="{Binding MonthYear}" Width="80" />
+                                            <Rectangle Fill="Green"
+                                                       Height="20"
+                                                       Width="{Binding TotalAmount, Converter={StaticResource AmountTLengthConverter}}"
+                                                       Margin="4,0,0,0"/>
+                                            <TextBlock Text="{Binding TotalAmount, StringFormat=C}"
+                                                       Margin="4,0,0,0"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Column Chart View -->
+                            <ItemsControl ItemsSource="{Binding DashboardSummary.MonthlySales}">
+                                <ItemsControl.Style>
+                                    <Style TargetType="ItemsControl">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedChartType}" Value="Column">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.Style>
+                                <ItemsControl.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Border BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                                                        BorderThickness="0,0,0,1" 
+                                                        Padding="0,0,0,8">
+                                                    <ItemsPresenter/>
+                                                </Border>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ItemsControl.Template>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" 
+                                                  HorizontalAlignment="Center"
+                                                  Margin="20,20,20,0"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="80" Margin="4">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding TotalAmount, StringFormat=C}"
+                                                     TextAlignment="Center"
+                                                     Margin="0,0,0,4"
+                                                     Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                                            <Rectangle Grid.Row="1"
+                                                       Fill="Green"
+                                                       Height="{Binding TotalAmount, 
+                 Converter={StaticResource AmountTLengthConverter}, 
+                 ConverterParameter=height}"
+                                                       Width="40"
+                                                       VerticalAlignment="Bottom"
+                                                       RadiusX="4"
+                                                       RadiusY="4">
+                                                <Rectangle.Effect>
+                                                    <DropShadowEffect BlurRadius="4" 
+                                                                      ShadowDepth="2" 
+                                                                      Opacity="0.3"/>
+                                                </Rectangle.Effect>
+                                            </Rectangle>
+                                            <TextBlock Grid.Row="2" 
+                                                     Text="{Binding MonthYear}"
+                                                     TextAlignment="Center"
+                                                     TextWrapping="Wrap"
+                                                     Margin="0,8,0,0"
+                                                     Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

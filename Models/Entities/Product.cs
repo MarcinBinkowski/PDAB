@@ -25,6 +25,8 @@ public partial class Product
 
     public virtual Manufacturer Manufacturer { get; set; } = null!;
 
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial; }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+        }
+        .header { margin-bottom: 30px; }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .items-table th, .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .total { text-align: right; }
+    </style>
+</head>
+<body>
+<div class="invoice-box">
+    <div class="header">
+        <h1>PDAB Sports Store</h1>
+        <h2>Invoice #{{OrderId}}</h2>
+        <p>Date: {{OrderDate}}</p>
+    </div>
+
+    <div class="customer">
+        <h3>Bill To:</h3>
+        <p>{{CustomerName}}<br>
+            {{CustomerEmail}}</p>
+    </div>
+
+    <table class="items-table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{Items}}
+        </tbody>
+    </table>
+
+    <div class="total">
+        <h3>Total: {{Total}}</h3>
+    </div>
+
+    <div class="footer">
+        <p>Thank you for staying with us!</p>
+    </div>
+</div>
+</body>
+</html>

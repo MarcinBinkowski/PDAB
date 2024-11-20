@@ -13,8 +13,6 @@ public partial class Order
 
     public int OrderStatusId { get; set; }
 
-    public decimal TotalAmount { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
