@@ -1,12 +1,26 @@
 ﻿<Window x:Class="PDAB.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PDAB"
-        mc:Ignorable="d"
         Title="Sport's shop" Height="720" Width="1280">
     <Grid>
-
+        <ListBox x:Name="TablesListBox" SelectionChanged="TablesListBox_SelectionChanged" HorizontalAlignment="Left" Width="200"/>
+        <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" HorizontalAlignment="Right" Width="580" Margin="0,0,10,0">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Click="EditRow_Click" Tag="{Binding}"/>
+                                <Button Content="Delete" Click="DeleteRow_Click" Tag="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200">
+            <TextBox x:Name="NewRowDataTextBox" Width="180" Margin="10"/>
+            <Button Content="Add New Row" Click="AddRow_Click" Width="180" Margin="10"/>
+        </StackPanel>
     </Grid>
 </Window>
