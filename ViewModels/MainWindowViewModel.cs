@@ -16,6 +16,8 @@ namespace PDAB.ViewModels
         private ObservableCollection<BaseWorkspaceViewModel> _Workspaces;
         private ObservableCollection<string> _Tables;
         private string _SelectedTable;
+        private BaseWorkspaceViewModel _activeWorkspace;
+        private ICommand _addNewItemCommand;
         #endregion
 
         #region Constructor
@@ -27,6 +29,7 @@ namespace PDAB.ViewModels
             LoadTables();
         }
         #endregion
+        
         
         #region Commands
         public ReadOnlyCollection<CommandViewModel> Commands
@@ -41,6 +44,31 @@ namespace PDAB.ViewModels
                 return _Commands;
             }
         }
+        
+        public BaseWorkspaceViewModel ActiveWorkspace
+        {
+            get => _activeWorkspace;
+            set
+            {
+                _activeWorkspace = value;
+                OnPropertyChanged("ActiveWorkspace");
+                (AddNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
+            }
+        }
+        public ICommand AddNewItemCommand
+        {
+            get
+            {
+                if (_addNewItemCommand == null)
+                {
+                    _addNewItemCommand = new BaseCommand(
+                        () => AddNewItem(),
+                        () => ActiveWorkspace != null);
+                }
+                return _addNewItemCommand;
+            }
+        }
+
         private List<CommandViewModel> CreateCommands()
         {
             Console.WriteLine("CreateCommands called");
@@ -50,13 +78,12 @@ namespace PDAB.ViewModels
                     "Roles",
                     new BaseCommand(() =>
                     {
-                        Console.WriteLine("Roles command executed");
                         this.ShowAllRoles();
-                    }))};
-            //     new CommandViewModel(
-            //         "Add Role",
-            //         new BaseCommand(() => this.AddNewRole()))
-            // };
+                    })),
+                new CommandViewModel(
+                    "Categories",
+                    new BaseCommand(() => this.ShowAllCategories()))
+            };
         }
         #endregion
 
@@ -139,6 +166,20 @@ namespace PDAB.ViewModels
             this.SetActiveWorkspace(workspace);
         }
         
+        private void ShowAllCategories()
+        {
+            AllCategoriesViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllCategoriesViewModel) as AllCategoriesViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllCategoriesViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        
         private void AddNewRole()
         {
             NewRoleViewModel workspace = new NewRoleViewModel();
@@ -151,15 +192,32 @@ namespace PDAB.ViewModels
         
         #region Private Helpers
 
+        private void AddNewItem()
+        {
+            Console.WriteLine("AddNewItem called");
+            if (ActiveWorkspace is AllRolesViewModel)
+            {
+                Console.WriteLine("AddNewItem for Roles called");
+                CreateView(new NewRoleViewModel());
+            }
+            else if (ActiveWorkspace is AllCategoriesViewModel)
+            {
+                Console.WriteLine("AddNewItem for Categories called");
+                CreateView(new NewCategoryViewModel());
+            }
+        }
+        
         private void CreateView(BaseWorkspaceViewModel nowy)
         {
-            this.Workspaces.Add(nowy); //to jest dodanie zakładki do kelkcji zakladek
-            this.SetActiveWorkspace(nowy); //aktywowanie zakladki
+            this.Workspaces.Add(nowy); 
+            this.SetActiveWorkspace(nowy); 
         }
 
         private void SetActiveWorkspace(BaseWorkspaceViewModel workspace)
         {
             Debug.Assert(this.Workspaces.Contains(workspace));
+            // re-evaluate CanExecute
+            // (_addNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
 
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
             if (collectionView != null)
