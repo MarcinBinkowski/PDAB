@@ -52,11 +52,11 @@ namespace PDAB.ViewModels
                     {
                         Console.WriteLine("Roles command executed");
                         this.ShowAllRoles();
-                    })),
-                new CommandViewModel(
-                    "Add Role",
-                    new BaseCommand(() => this.AddNewRole()))
-            };
+                    }))};
+            //     new CommandViewModel(
+            //         "Add Role",
+            //         new BaseCommand(() => this.AddNewRole()))
+            // };
         }
         #endregion
 

@@ -1,13 +1,11 @@
-﻿
+﻿// MainWindow.xaml.cs
 using System.Windows;
-
 using PDAB.ViewModels;
 
-namespace PDAB.Views
+namespace PDAB
 {
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();

@@ -28,7 +28,6 @@ namespace PDAB.ViewModels
             (
                 dbContext.Roles.ToList()
             ); 
-            Console.WriteLine("AllRolesViewModel.Load()");
         }
         #endregion
     }
