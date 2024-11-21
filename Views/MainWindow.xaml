@@ -95,6 +95,9 @@
                     <DataTemplate DataType="{x:Type viewmodels:AllCategoriesViewModel}">
                         <views:AllCategoriesView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewRoleViewModel}">
+                        <views:NewRoleView/>
+                    </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
