@@ -17,6 +17,7 @@ namespace PDAB.Helpers
 
         public void Execute(object parameter)
         {
+            Console.WriteLine($"BaseCommand.Execute called");
             _command();
         }
 

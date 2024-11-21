@@ -8,11 +8,13 @@ public partial class PdabDbContext : DbContext
 {
     public PdabDbContext()
     {
+        Console.WriteLine("PdabDbContext created");
     }
 
     public PdabDbContext(DbContextOptions<PdabDbContext> options)
         : base(options)
     {
+        Console.WriteLine("PdabDbContext created with options");
     }
 
     public virtual DbSet<Category> Categories { get; set; }

@@ -11,6 +11,7 @@ namespace PDAB.ViewModels
         #region Constructor
         public CommandViewModel(string displayName, ICommand command)
         {
+            Console.WriteLine($"Creating command: {displayName}");
             if (command == null)
                 throw new ArgumentNullException("command");
             this.DisplayName = displayName;

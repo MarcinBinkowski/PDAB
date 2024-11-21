@@ -14,8 +14,20 @@ namespace PDAB.ViewModels
        #region Fields
         private ReadOnlyCollection<CommandViewModel> _Commands;
         private ObservableCollection<BaseWorkspaceViewModel> _Workspaces;
+        private ObservableCollection<string> _Tables;
+        private string _SelectedTable;
         #endregion
 
+        #region Constructor
+        public MainWindowViewModel()
+        {
+            Console.WriteLine("Created MainWindowViewModel");
+            Messenger.Default.Register<string>(this, open);
+            _Commands = new ReadOnlyCollection<CommandViewModel>(CreateCommands());
+            LoadTables();
+        }
+        #endregion
+        
         #region Commands
         public ReadOnlyCollection<CommandViewModel> Commands
         {
@@ -31,13 +43,19 @@ namespace PDAB.ViewModels
         }
         private List<CommandViewModel> CreateCommands()
         {
-            //
-            Messenger.Default.Register<string>(this, open);
+            Console.WriteLine("CreateCommands called");
             return new List<CommandViewModel>
             {
                 new CommandViewModel(
                     "Roles",
-                    new BaseCommand(() => this.ShowAllRoles())),
+                    new BaseCommand(() =>
+                    {
+                        Console.WriteLine("Roles command executed");
+                        this.ShowAllRoles();
+                    })),
+                new CommandViewModel(
+                    "Add Role",
+                    new BaseCommand(() => this.AddNewRole()))
             };
         }
         #endregion
@@ -73,6 +91,64 @@ namespace PDAB.ViewModels
 
         #endregion
 
+        
+        
+        #region Tables
+        public ObservableCollection<string> Tables
+        {
+            get => _Tables;
+            set
+            {
+                _Tables = value;
+                OnPropertyChanged("Tables"); // Use string literal instead of lambda
+            }
+        }
+
+        public string SelectedTable
+        {
+            get => _SelectedTable;
+            set
+            {
+                _SelectedTable = value;
+                OnPropertyChanged("SelectedTable"); 
+            }
+        }
+
+        private void LoadTables()
+        {
+            Tables = new ObservableCollection<string>
+            {
+                "Roles"
+            };
+        }
+        #endregion
+        
+        #region ShowTables
+        private void ShowAllRoles()
+        {
+            Console.WriteLine("ShowAllRoles called");
+            AllRolesViewModel workspace = 
+                this.Workspaces.FirstOrDefault(vm => vm is AllRolesViewModel) 
+                    as AllRolesViewModel;
+            if (workspace == null)
+            {
+                workspace = new AllRolesViewModel();
+                this.Workspaces.Add(workspace);
+            }
+
+            this.SetActiveWorkspace(workspace);
+        }
+        
+        private void AddNewRole()
+        {
+            NewRoleViewModel workspace = new NewRoleViewModel();
+            this.Workspaces.Add(workspace);
+            this.SetActiveWorkspace(workspace);
+        }
+        #endregion
+        
+        
+        
         #region Private Helpers
 
         private void CreateView(BaseWorkspaceViewModel nowy)
@@ -93,22 +169,6 @@ namespace PDAB.ViewModels
         {
             if (name == "RoleAdd")
                 CreateView(new NewRoleViewModel());
-        }
-        #endregion
-        
-        #region ShowTables
-        private void ShowAllRoles()
-        {
-            AllRolesViewModel workspace = 
-                this.Workspaces.FirstOrDefault(vm => vm is AllRolesViewModel) 
-                    as AllRolesViewModel;
-            if (workspace == null)
-            {
-                workspace = new AllRolesViewModel();
-                this.Workspaces.Add(workspace);
-            }
-
-            this.SetActiveWorkspace(workspace);
         }
         #endregion
     }    

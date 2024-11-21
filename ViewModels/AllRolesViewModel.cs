@@ -17,6 +17,8 @@ namespace PDAB.ViewModels
         public AllRolesViewModel()
             :base("Roles")
         {
+            Console.WriteLine("AllRolesViewModel()");
+            Load();
         }
         #endregion
         #region Helpers
@@ -26,6 +28,7 @@ namespace PDAB.ViewModels
             (
                 dbContext.Roles.ToList()
             ); 
+            Console.WriteLine("AllRolesViewModel.Load()");
         }
         #endregion
     }

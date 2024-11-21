@@ -1,0 +1,45 @@
+﻿<Window x:Class="PDAB.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PDAB" Height="480" Width="720" 
+        xmlns:vm="clr-namespace:PDAB.Views">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel -->
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="List of Tables" FontWeight="Bold" Margin="5"/>
+            <ListBox ItemsSource="{Binding Tables}"
+                     SelectedItem="{Binding SelectedTable}"
+                     Margin="5"/>
+        </StackPanel>
+
+        <!-- Right Panel -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Buttons Panel -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                <Button Content="Add" Margin="5"/>
+                <Button Content="Edit" Margin="5"/>
+                <Button Content="Delete" Margin="5"/>
+            </StackPanel>
+
+            <!-- DataGrid -->
+            <DataGrid ItemsSource="{Binding Tables}" 
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Table Name" 
+                                        Binding="{Binding}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

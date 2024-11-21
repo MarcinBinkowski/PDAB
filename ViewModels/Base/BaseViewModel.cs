@@ -85,28 +85,29 @@ namespace PDAB.ViewModels
 
         #region Propertychanged
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         protected void OnPropertyChanged<T>(Expression<Func<T>> action)
         {
             var propertyName = GetPropertyName(action);
             OnPropertyChanged(propertyName);
         }
 
-        private static string GetPropertyName<T>(Expression<Func<T>> action)
+        private string GetPropertyName<T>(Expression<Func<T>> action)
         {
-            var expression = (MemberExpression)action.Body;
-            var propertyName = expression.Member.Name;
-            return propertyName;
+            if (action.Body is MemberExpression memberExpression)
+            {
+                return memberExpression.Member.Name;
+            }
+        
+            throw new ArgumentException("Expression must be a property access", nameof(action));
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler == null) return;
-            var e = new PropertyChangedEventArgs(propertyName);
-            handler(this, e);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
     }
