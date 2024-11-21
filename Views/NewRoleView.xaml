@@ -13,11 +13,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <!-- Role ID -->
-        <Label Grid.Row="0" Grid.Column="0" Content="Role ID:" Margin="0,0,10,10"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RoleId}" Margin="0,0,0,10"/>
-
+        
         <!-- Role Name -->
         <Label Grid.Row="1" Grid.Column="0" Content="Role Name:" Margin="0,0,10,10"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RoleName}" Margin="0,0,0,10"/>

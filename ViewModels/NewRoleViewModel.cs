@@ -13,18 +13,6 @@ namespace PDAB.ViewModels
         #endregion
 
         #region Properties
-        public int RoleId
-        {
-            get
-            {
-                return item.RoleId;
-            }
-            set
-            {
-                item.RoleId = value;
-                OnPropertyChanged(() => RoleId);
-            }
-        }
 
         public string RoleName
         {

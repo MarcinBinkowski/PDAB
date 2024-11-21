@@ -8,13 +8,11 @@ public partial class PdabDbContext : DbContext
 {
     public PdabDbContext()
     {
-        Console.WriteLine("PdabDbContext created");
     }
 
     public PdabDbContext(DbContextOptions<PdabDbContext> options)
         : base(options)
     {
-        Console.WriteLine("PdabDbContext created with options");
     }
 
     public virtual DbSet<Category> Categories { get; set; }
@@ -294,9 +292,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Role");
 
-            entity.Property(e => e.RoleId)
-                .ValueGeneratedNever()
-                .HasColumnName("RoleID");
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.RoleName).HasMaxLength(50);
         });
