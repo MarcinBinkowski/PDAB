@@ -1,0 +1,15 @@
+<UserControl x:Class="PDAB.Views.AllOrderStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding List}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding OrderStatusId}" Width="50"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding StatusName}" Width="150"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -84,7 +84,10 @@ namespace PDAB.ViewModels
                     "Categories",
                     new BaseCommand(() => this.ShowAllCategories())),
                 new CommandViewModel("Discounts", new BaseCommand(() => ShowAllDiscounts())),
-                new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods()))
+                new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods())),
+                new CommandViewModel("Order Status", new BaseCommand(() => ShowAllOrderStatus())),
+                new CommandViewModel("Manufacturers", new BaseCommand(() => ShowAllManufacturers()))
+
 
 
             };
@@ -214,6 +217,36 @@ namespace PDAB.ViewModels
 
             SetActiveWorkspace(workspace);
         }
+        private void ShowAllOrderStatus()
+        {
+            AllOrderStatusViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllOrderStatusViewModel) 
+                    as AllOrderStatusViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllOrderStatusViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        
+        private void ShowAllManufacturers()
+        {
+            AllManufacturersViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllManufacturersViewModel) 
+                    as AllManufacturersViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllManufacturersViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        
         #endregion
         
         
@@ -225,12 +258,10 @@ namespace PDAB.ViewModels
             Console.WriteLine("AddNewItem called");
             if (ActiveWorkspace is AllRolesViewModel)
             {
-                Console.WriteLine("AddNewItem for Roles called");
                 CreateView(new NewRoleViewModel());
             }
             else if (ActiveWorkspace is AllCategoriesViewModel)
             {
-                Console.WriteLine("AddNewItem for Categories called");
                 CreateView(new NewCategoryViewModel());
             }
             else if (ActiveWorkspace is AllDiscountsViewModel)
@@ -240,6 +271,14 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllPaymentMethodsViewModel)
             {
                 CreateView(new NewPaymentMethodViewModel());
+            }
+            else if (ActiveWorkspace is AllOrderStatusViewModel)
+            {
+                CreateView(new NewOrderStatusViewModel());
+            }
+            else if (ActiveWorkspace is AllManufacturersViewModel)
+            {
+                CreateView(new NewManufacturerViewModel());
             }
         }
         

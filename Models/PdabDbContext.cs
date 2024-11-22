@@ -205,9 +205,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("PaymentMethod");
 
-            entity.Property(e => e.PaymentMethodId)
-                .ValueGeneratedNever()
-                .HasColumnName("PaymentMethodID");
+            entity.Property(e => e.PaymentMethodId).HasColumnName("PaymentMethodID");
             entity.Property(e => e.MethodName).HasMaxLength(50);
         });
 
