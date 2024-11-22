@@ -86,10 +86,9 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Discounts", new BaseCommand(() => ShowAllDiscounts())),
                 new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods())),
                 new CommandViewModel("Order Status", new BaseCommand(() => ShowAllOrderStatus())),
-                new CommandViewModel("Manufacturers", new BaseCommand(() => ShowAllManufacturers()))
-
-
-
+                new CommandViewModel("Manufacturers", new BaseCommand(() => ShowAllManufacturers())),
+                new CommandViewModel("Customers", new BaseCommand(() => ShowAllCustomers())),
+                new CommandViewModel("Employees", new BaseCommand(() => ShowAllEmployees()))
             };
         }
         #endregion
@@ -246,6 +245,34 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
+        private void ShowAllCustomers()
+        {
+            AllCustomersViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllCustomersViewModel) 
+                    as AllCustomersViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllCustomersViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        private void ShowAllEmployees()
+        {
+            AllEmployeesViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllEmployeesViewModel) 
+                    as AllEmployeesViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllEmployeesViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
         
         #endregion
         
@@ -279,6 +306,14 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllManufacturersViewModel)
             {
                 CreateView(new NewManufacturerViewModel());
+            }
+            else if (ActiveWorkspace is AllCustomersViewModel)
+            {
+                CreateView(new NewCustomerViewModel());
+            }
+            else if (ActiveWorkspace is AllEmployeesViewModel)
+            {
+                CreateView(new NewEmployeeViewModel());
             }
         }
         

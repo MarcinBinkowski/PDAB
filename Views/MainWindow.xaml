@@ -125,6 +125,18 @@
                     <DataTemplate DataType="{x:Type viewmodels:NewManufacturerViewModel}">
                         <views:NewManufacturerView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllCustomersViewModel}">
+                        <views:AllCustomersView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewCustomerViewModel}">
+                        <views:NewCustomerView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllEmployeesViewModel}">
+                        <views:AllEmployeesView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewEmployeeViewModel}">
+                        <views:NewEmployeeView/>
+                    </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
