@@ -82,7 +82,11 @@ namespace PDAB.ViewModels
                     })),
                 new CommandViewModel(
                     "Categories",
-                    new BaseCommand(() => this.ShowAllCategories()))
+                    new BaseCommand(() => this.ShowAllCategories())),
+                new CommandViewModel("Discounts", new BaseCommand(() => ShowAllDiscounts())),
+                new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods()))
+
+
             };
         }
         #endregion
@@ -179,12 +183,36 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
-        
-        private void AddNewRole()
+        private void ShowAllDiscounts()
         {
-            NewRoleViewModel workspace = new NewRoleViewModel();
-            this.Workspaces.Add(workspace);
-            this.SetActiveWorkspace(workspace);
+            AllDiscountsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllDiscountsViewModel) 
+                    as AllDiscountsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllDiscountsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        
+        private void ShowAllPaymentMethods()
+        {
+            Console.WriteLine("ShowAllPaymentMethods called");
+            AllPaymentMethodsViewModel workspace = 
+                this.Workspaces.FirstOrDefault(vm => vm is AllPaymentMethodsViewModel) 
+                    as AllPaymentMethodsViewModel;
+    
+            if (workspace == null)
+            {
+                Console.WriteLine("Creating new PaymentMethods workspace");
+                workspace = new AllPaymentMethodsViewModel();
+                this.Workspaces.Add(workspace);
+            }
+
+            SetActiveWorkspace(workspace);
         }
         #endregion
         
@@ -205,6 +233,14 @@ namespace PDAB.ViewModels
                 Console.WriteLine("AddNewItem for Categories called");
                 CreateView(new NewCategoryViewModel());
             }
+            else if (ActiveWorkspace is AllDiscountsViewModel)
+            {
+                CreateView(new NewDiscountViewModel());
+            }
+            else if (ActiveWorkspace is AllPaymentMethodsViewModel)
+            {
+                CreateView(new NewPaymentMethodViewModel());
+            }
         }
         
         private void CreateView(BaseWorkspaceViewModel nowy)
@@ -215,10 +251,6 @@ namespace PDAB.ViewModels
 
         private void SetActiveWorkspace(BaseWorkspaceViewModel workspace)
         {
-            Debug.Assert(this.Workspaces.Contains(workspace));
-            // re-evaluate CanExecute
-            // (_addNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
-
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
             if (collectionView != null)
                 collectionView.MoveCurrentTo(workspace);

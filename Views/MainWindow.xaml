@@ -101,6 +101,18 @@
                     <DataTemplate DataType="{x:Type viewmodels:NewCategoryViewModel}">
                         <views:NewCategoryView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllDiscountsViewModel}">
+                        <views:AllDiscountsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewDiscountViewModel}">
+                        <views:NewDiscountView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllPaymentMethodsViewModel}">
+                        <views:AllPaymentMethodsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewPaymentMethodViewModel}">
+                        <views:NewPaymentMethodView/>
+                    </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
