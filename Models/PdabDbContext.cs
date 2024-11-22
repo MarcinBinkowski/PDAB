@@ -57,9 +57,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Category");
 
-            entity.Property(e => e.CategoryId)
-                .ValueGeneratedNever()
-                .HasColumnName("CategoryID");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CategoryName).HasMaxLength(100);
         });
 
@@ -67,9 +65,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Customer");
 
-            entity.Property(e => e.CustomerId)
-                .ValueGeneratedNever()
-                .HasColumnName("CustomerID");
+            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.Address).HasMaxLength(250);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(50);
@@ -81,9 +77,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Discount");
 
-            entity.Property(e => e.DiscountId)
-                .ValueGeneratedNever()
-                .HasColumnName("DiscountID");
+            entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.DiscountName).HasMaxLength(100);
             entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(5, 2)");
@@ -96,9 +90,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("DiscountProduct");
 
-            entity.Property(e => e.DiscountProductId)
-                .ValueGeneratedNever()
-                .HasColumnName("DiscountProductID");
+            entity.Property(e => e.DiscountProductId).HasColumnName("DiscountProductID");
             entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
@@ -117,9 +109,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Employee");
 
-            entity.Property(e => e.EmployeeId)
-                .ValueGeneratedNever()
-                .HasColumnName("EmployeeID");
+            entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(50);
             entity.Property(e => e.LastName).HasMaxLength(50);
@@ -131,9 +121,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Manufacturer");
 
-            entity.Property(e => e.ManufacturerId)
-                .ValueGeneratedNever()
-                .HasColumnName("ManufacturerID");
+            entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
             entity.Property(e => e.ManufacturerName).HasMaxLength(100);
         });
 
@@ -141,9 +129,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Order");
 
-            entity.Property(e => e.OrderId)
-                .ValueGeneratedNever()
-                .HasColumnName("OrderID");
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
@@ -166,9 +152,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("OrderDetail");
 
-            entity.Property(e => e.OrderDetailId)
-                .ValueGeneratedNever()
-                .HasColumnName("OrderDetailID");
+            entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
             entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
@@ -212,9 +196,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("OrderStatus");
 
-            entity.Property(e => e.OrderStatusId)
-                .ValueGeneratedNever()
-                .HasColumnName("OrderStatusID");
+            entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
             entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.StatusName).HasMaxLength(50);
         });
@@ -233,9 +215,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Product");
 
-            entity.Property(e => e.ProductId)
-                .ValueGeneratedNever()
-                .HasColumnName("ProductID");
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Description).HasMaxLength(1000);
             entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
@@ -257,9 +237,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("ProductImage");
 
-            entity.Property(e => e.ProductImageId)
-                .ValueGeneratedNever()
-                .HasColumnName("ProductImageID");
+            entity.Property(e => e.ProductImageId).HasColumnName("ProductImageID");
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(2000)
                 .HasColumnName("ImageURL");
@@ -274,9 +252,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("Review");
 
-            entity.Property(e => e.ReviewId)
-                .ValueGeneratedNever()
-                .HasColumnName("ReviewID");
+            entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
             entity.Property(e => e.Comment).HasMaxLength(1000);
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
@@ -301,9 +277,7 @@ public partial class PdabDbContext : DbContext
         {
             entity.ToTable("User");
 
-            entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
-                .HasColumnName("UserID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
             entity.Property(e => e.PasswordHash).HasMaxLength(256);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
