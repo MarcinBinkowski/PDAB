@@ -1,5 +1,4 @@
-﻿// MainWindow.xaml.cs
-using System.Windows;
+﻿using System.Windows;
 using PDAB.ViewModels;
 
 namespace PDAB
