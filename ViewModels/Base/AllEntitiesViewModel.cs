@@ -2,12 +2,13 @@ using GalaSoft.MvvmLight.Messaging;
 using PDAB.Helpers;
 using PDAB.Models;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 
 namespace PDAB.ViewModels
 {
-    public abstract class AllEntitiesViewModel<T> : BaseWorkspaceViewModel
+    public abstract class AllEntitiesViewModel<T> : BaseWorkspaceViewModel where T : class
     {
         #region DB
         protected readonly PdabDbContext dbContext;
@@ -26,6 +27,20 @@ namespace PDAB.ViewModels
                 return _refreshCommand;
             }
         }
+        private BaseCommand _deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                    _deleteCommand = new BaseCommand(
+                        () => DeleteSelected(),
+                        () => SelectedItem != null);
+                return _deleteCommand;
+            }
+        }
+
+        
         #endregion
 
         #region List
@@ -57,6 +72,34 @@ namespace PDAB.ViewModels
         #region Helpers
         public abstract void Load();
 
+        protected T _selectedItem;
+        public T SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(() => SelectedItem);
+                (_deleteCommand as BaseCommand)?.RaiseCanExecuteChanged();
+            }
+        }
+        private void DeleteSelected()
+        {
+            if (SelectedItem == null) return;
+
+            var result = MessageBox.Show(
+                "Are you sure you want to delete this item?",
+                "Confirm Delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                dbContext.Set<T>().Remove(SelectedItem);
+                dbContext.SaveChanges();
+                Load();
+            }
+        }
         #endregion
     }
 }
