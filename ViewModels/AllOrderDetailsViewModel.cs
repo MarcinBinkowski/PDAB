@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
+using PDAB.ViewModels;
 
 namespace PDAB.ViewModels
 {

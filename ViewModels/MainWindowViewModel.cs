@@ -93,13 +93,9 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Orders", new BaseCommand(() => ShowAllOrders())),
                 new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments())),
                 new CommandViewModel("Reviews", new BaseCommand(() => ShowAllReviews())),
-                new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers()))
-
-
-
-
-
-            };
+                new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers())),
+                new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails()))
+          };
         }
         #endregion
 
@@ -356,6 +352,22 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
+        
+        private void ShowAllOrderDetails()
+        {
+            AllOrderDetailsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllOrderDetailsViewModel) 
+                    as AllOrderDetailsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllOrderDetailsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+
         #endregion
         
         
@@ -416,6 +428,10 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllUsersViewModel)
             {
                 CreateView(new NewUserViewModel());
+            }
+            else if (ActiveWorkspace is AllOrderDetailsViewModel)
+            {
+                CreateView(new NewOrderDetailViewModel());
             }
         }
         

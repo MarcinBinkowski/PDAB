@@ -167,6 +167,12 @@
                     <DataTemplate DataType="{x:Type viewmodels:NewUserViewModel}">
                         <views:NewUserView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllOrderDetailsViewModel}">
+                        <views:AllOrderDetailsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewOrderDetailViewModel}">
+                        <views:NewOrderDetailView/>
+                    </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>
                     <DataTemplate>
