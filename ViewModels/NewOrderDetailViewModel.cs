@@ -103,20 +103,25 @@ namespace PDAB.ViewModels
             }
         }
 
-        public override void Save()
+        protected override bool ValidateBeforeSave()
         {
             if (Quantity <= 0)
             {
                 MessageBox.Show("Quantity must be greater than 0", "Validation Error");
-                return;
+                return false;
             }
 
             if (UnitPrice <= 0)
             {
                 MessageBox.Show("Unit price must be greater than 0", "Validation Error");
-                return;
+                return false;
             }
 
+            return true;
+        }
+
+        public override void Save()
+        {
             dbContext.OrderDetails.Add(item);
             dbContext.SaveChanges();
         }

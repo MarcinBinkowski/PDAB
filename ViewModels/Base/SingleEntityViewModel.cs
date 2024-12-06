@@ -35,10 +35,19 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
 
     #region Helpers
     public abstract void Save();
+    protected virtual bool ValidateBeforeSave()
+    {
+        return true;
+    }
+
+
     public void SaveAndClose()
     {
-        Save();
-        base.OnRequestClose();
+        if (ValidateBeforeSave())
+        {
+            Save();
+            base.OnRequestClose();
+        }
     }
     #endregion
 }
