@@ -435,10 +435,10 @@ namespace PDAB.ViewModels
             }
         }
         
-        private void CreateView(BaseWorkspaceViewModel nowy)
+        private void CreateView(BaseWorkspaceViewModel new_workspace)
         {
-            this.Workspaces.Add(nowy); 
-            this.SetActiveWorkspace(nowy); 
+            this.Workspaces.Add(new_workspace); 
+            this.SetActiveWorkspace(new_workspace); 
         }
 
         private void SetActiveWorkspace(BaseWorkspaceViewModel workspace)

@@ -73,10 +73,21 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Remove" 
+                <Button Content="Refresh" 
+                        Command="{Binding ActiveWorkspace.RefreshCommand}"
                         Width="80" 
-                        Height="25" 
-                        Margin="0,0,10,0"/>
+                        Height="25"
+                        Margin="0,0,10,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveWorkspace}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Content="Delete" 
                         Width="80" 
                         Height="25"/>

@@ -35,6 +35,16 @@ namespace PDAB.ViewModels
                 return _AddCommand;
             }
         }
+        private BaseCommand _refreshCommand;
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                if (_refreshCommand == null)
+                    _refreshCommand = new BaseCommand(() => refresh());
+                return _refreshCommand;
+            }
+        }
         #endregion
 
         #region List
@@ -68,6 +78,11 @@ namespace PDAB.ViewModels
         private void add()
         {
             Messenger.Default.Send(DisplayName + "Add");
+        }
+        private void refresh()
+        {
+            Messenger.Default.Send(DisplayName + "Refresh");
+            Load();
         }
         #endregion
     }

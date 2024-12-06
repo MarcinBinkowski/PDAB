@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Messaging;
 using PDAB.Helpers;
 using PDAB.Models;
 
@@ -46,6 +47,8 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
         if (ValidateBeforeSave())
         {
             Save();
+            Console.WriteLine($"Sending refresh message: {DisplayName}Refresh");
+            Messenger.Default.Send(DisplayName + "Refresh");
             base.OnRequestClose();
         }
     }
