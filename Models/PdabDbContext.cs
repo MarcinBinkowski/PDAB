@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace WpfApp1.Models;
+namespace PDAB.Models;
 
 public partial class PdabDbContext : DbContext
 {
