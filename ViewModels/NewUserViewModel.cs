@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -93,8 +94,11 @@ namespace PDAB.ViewModels
             }
         }
 
-        private byte[] HashPassword(string password)
+        public static byte[] HashPassword(string password)
         {
+            if (string.IsNullOrEmpty(password))
+                throw new ArgumentException("Password cannot be empty");
+
             using (var sha256 = SHA256.Create())
             {
                 return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -103,12 +107,24 @@ namespace PDAB.ViewModels
 
         public override void Save()
         {
-            if (!string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(Password))
+            {
+                MessageBox.Show("Password is required", "Validation Error",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
             {
                 item.PasswordHash = HashPassword(Password);
+                dbContext.Users.Add(item);
+                dbContext.SaveChanges();
             }
-            dbContext.Users.Add(item);
-            dbContext.SaveChanges();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving user: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
