@@ -14,34 +14,15 @@ namespace PDAB.ViewModels
         #endregion
 
         #region Command
-        private BaseCommand _LoadCommand;
-        public ICommand LoadCommand
-        {
-            get
-            {
-                if (_LoadCommand == null)
-                    _LoadCommand = new BaseCommand(() => Load());
-                return _LoadCommand;
-            }
-        }
 
-        private BaseCommand _AddCommand;
-        public ICommand AddCommand
-        {
-            get
-            {
-                if (_AddCommand == null)
-                    _AddCommand = new BaseCommand(() => add());
-                return _AddCommand;
-            }
-        }
+
         private BaseCommand _refreshCommand;
-        public ICommand RefreshCommand
+        public ICommand RefreshCommand // References in mainwindow.xaml
         {
             get
             {
                 if (_refreshCommand == null)
-                    _refreshCommand = new BaseCommand(() => refresh());
+                    _refreshCommand = new BaseCommand(() => Load()); // Load is implemented on all ViewModels
                 return _refreshCommand;
             }
         }
@@ -75,15 +56,7 @@ namespace PDAB.ViewModels
 
         #region Helpers
         public abstract void Load();
-        private void add()
-        {
-            Messenger.Default.Send(DisplayName + "Add");
-        }
-        private void refresh()
-        {
-            Messenger.Default.Send(DisplayName + "Refresh");
-            Load();
-        }
+
         #endregion
     }
 }

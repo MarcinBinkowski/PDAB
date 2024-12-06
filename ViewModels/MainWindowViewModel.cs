@@ -24,7 +24,6 @@ namespace PDAB.ViewModels
         public MainWindowViewModel()
         {
             Console.WriteLine("Created MainWindowViewModel");
-            Messenger.Default.Register<string>(this, open);
             _Commands = new ReadOnlyCollection<CommandViewModel>(CreateCommands());
             LoadTables();
         }
@@ -94,7 +93,9 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments())),
                 new CommandViewModel("Reviews", new BaseCommand(() => ShowAllReviews())),
                 new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers())),
-                new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails()))
+                new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails())),
+                new CommandViewModel("Product Images", new BaseCommand(() => ShowAllProductImages()))
+
           };
         }
         #endregion
@@ -367,7 +368,20 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
-
+        private void ShowAllProductImages()
+        {
+            AllProductImagesViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllProductImagesViewModel) 
+                    as AllProductImagesViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllProductImagesViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
         #endregion
         
         
@@ -433,6 +447,10 @@ namespace PDAB.ViewModels
             {
                 CreateView(new NewOrderDetailViewModel());
             }
+            else if (ActiveWorkspace is AllProductImagesViewModel)
+            {
+                CreateView(new NewProductImageViewModel());
+            }
         }
         
         private void CreateView(BaseWorkspaceViewModel new_workspace)
@@ -446,11 +464,6 @@ namespace PDAB.ViewModels
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
             if (collectionView != null)
                 collectionView.MoveCurrentTo(workspace);
-        }
-        private void open(string name)//name to jest ten wysłany komunikat
-        {
-            if (name == "RoleAdd")
-                CreateView(new NewRoleViewModel());
         }
         #endregion
     }    
