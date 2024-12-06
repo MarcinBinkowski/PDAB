@@ -88,7 +88,13 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Order Status", new BaseCommand(() => ShowAllOrderStatus())),
                 new CommandViewModel("Manufacturers", new BaseCommand(() => ShowAllManufacturers())),
                 new CommandViewModel("Customers", new BaseCommand(() => ShowAllCustomers())),
-                new CommandViewModel("Employees", new BaseCommand(() => ShowAllEmployees()))
+                new CommandViewModel("Employees", new BaseCommand(() => ShowAllEmployees())),
+                new CommandViewModel("Products", new BaseCommand(() => ShowAllProducts())),
+                new CommandViewModel("Orders", new BaseCommand(() => ShowAllOrders())),
+                new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments()))
+
+
+
             };
         }
         #endregion
@@ -274,6 +280,50 @@ namespace PDAB.ViewModels
             SetActiveWorkspace(workspace);
         }
         
+        private void ShowAllProducts()
+        {
+            AllProductsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllProductsViewModel) 
+                    as AllProductsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllProductsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        
+        private void ShowAllOrders()
+        {
+            AllOrdersViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllOrdersViewModel) 
+                    as AllOrdersViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllOrdersViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+
+        private void ShowAllOrderPayments()
+        {
+            AllOrderPaymentsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllOrderPaymentsViewModel) 
+                    as AllOrderPaymentsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllOrderPaymentsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
         #endregion
         
         
@@ -314,6 +364,18 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllEmployeesViewModel)
             {
                 CreateView(new NewEmployeeViewModel());
+            }
+            else if (ActiveWorkspace is AllProductsViewModel)
+            {
+                CreateView(new NewProductViewModel());
+            }
+            else if (ActiveWorkspace is AllOrdersViewModel)
+            {
+                CreateView(new NewOrderViewModel());
+            }
+            else if (ActiveWorkspace is AllOrderPaymentsViewModel)
+            {
+                CreateView(new NewOrderPaymentViewModel());
             }
         }
         

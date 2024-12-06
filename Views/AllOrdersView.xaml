@@ -1,0 +1,19 @@
+<UserControl x:Class="PDAB.Views.AllOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding List}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding OrderId}" Width="50"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding OrderDate, StringFormat={}{0:d}}" Width="100"/>
+                    <GridViewColumn Header="Customer" DisplayMemberBinding="{Binding Customer.FirstName}" Width="100"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding OrderStatus.StatusName}" Width="100"/>
+                    <GridViewColumn Header="Total" DisplayMemberBinding="{Binding TotalAmount, StringFormat=C}" Width="100"/>
+                    <GridViewColumn Header="Created" DisplayMemberBinding="{Binding CreatedAt, StringFormat={}{0:g}}" Width="130"/>
+                    <GridViewColumn Header="Updated" DisplayMemberBinding="{Binding UpdatedAt, StringFormat={}{0:g}}" Width="130"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>
