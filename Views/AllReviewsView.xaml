@@ -1,0 +1,17 @@
+<UserControl x:Class="PDAB.Views.AllReviewsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding List}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ReviewId}" Width="50"/>
+                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product.ProductName}" Width="150"/>
+                    <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding Rating}" Width="60"/>
+                    <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding Comment}" Width="200"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding ReviewDate, StringFormat={}{0:g}}" Width="130"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

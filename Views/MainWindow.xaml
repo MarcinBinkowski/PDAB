@@ -155,6 +155,18 @@
                     <DataTemplate DataType="{x:Type viewmodels:NewOrderPaymentViewModel}">
                         <views:NewOrderPaymentView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllReviewsViewModel}">
+                        <views:AllReviewsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewReviewViewModel}">
+                        <views:NewReviewView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllUsersViewModel}">
+                        <views:AllUsersView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewUserViewModel}">
+                        <views:NewUserView/>
+                    </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>
                     <DataTemplate>

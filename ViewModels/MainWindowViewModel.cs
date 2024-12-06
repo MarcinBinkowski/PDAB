@@ -91,7 +91,11 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Employees", new BaseCommand(() => ShowAllEmployees())),
                 new CommandViewModel("Products", new BaseCommand(() => ShowAllProducts())),
                 new CommandViewModel("Orders", new BaseCommand(() => ShowAllOrders())),
-                new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments()))
+                new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments())),
+                new CommandViewModel("Reviews", new BaseCommand(() => ShowAllReviews())),
+                new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers()))
+
+
 
 
 
@@ -324,6 +328,34 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
+        private void ShowAllReviews()
+        {
+            AllReviewsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllReviewsViewModel) 
+                    as AllReviewsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllReviewsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
+        private void ShowAllUsers()
+        {
+            AllUsersViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllUsersViewModel) 
+                    as AllUsersViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllUsersViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
         #endregion
         
         
@@ -376,6 +408,14 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllOrderPaymentsViewModel)
             {
                 CreateView(new NewOrderPaymentViewModel());
+            }
+            else if (ActiveWorkspace is AllReviewsViewModel)
+            {
+                CreateView(new NewReviewViewModel());
+            }
+            else if (ActiveWorkspace is AllUsersViewModel)
+            {
+                CreateView(new NewUserViewModel());
             }
         }
         
