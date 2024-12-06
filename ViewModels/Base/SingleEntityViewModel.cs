@@ -117,6 +117,12 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
                 .FirstOrDefault(w => w is AllProductsViewModel) as AllProductsViewModel;
             parentWorkspace?.Load();
         }
+        else if (this is NewDiscountProductViewModel)
+        {
+            var parentWorkspace = mainVM?.Workspaces
+                .FirstOrDefault(w => w is AllDiscountProductsViewModel) as AllDiscountProductsViewModel;
+            parentWorkspace?.Load();
+        }
 
             base.OnRequestClose();
         }

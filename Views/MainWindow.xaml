@@ -10,7 +10,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Left Panel -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -22,17 +21,16 @@
                       FontWeight="Bold" 
                       Margin="15,10,10,5"/>
 
-            <!-- Commands List -->
             <StackPanel Grid.Row="1"
                       Background="#F0F0F0" 
-                      Margin="10">
+                      Margin="5">
                 <ItemsControl ItemsSource="{Binding Commands}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Button Content="{Binding DisplayName}"
                                     Command="{Binding Command}"
-                                    Margin="5,10"
-                                    Height="30"
+                                    Margin="2,3"
+                                    Height="24"
                                     HorizontalAlignment="Stretch"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -40,7 +38,6 @@
             </StackPanel>
         </Grid>
 
-        <!-- Right Panel -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -53,7 +50,6 @@
                       FontWeight="Bold" 
                       Margin="10,10,10,5"/>
 
-            <!-- Action Buttons -->
             <StackPanel Grid.Row="1" 
                         Orientation="Horizontal" 
                         Margin="10,0,10,10">
@@ -93,7 +89,6 @@
                         Height="25"/>
             </StackPanel>
 
-            <!-- Workspace Area -->
             <TabControl Grid.Row="2" 
                         ItemsSource="{Binding Workspaces}"
                         IsSynchronizedWithCurrentItem="True"
@@ -189,6 +184,12 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:NewProductImageViewModel}">
                         <views:NewProductImageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AllDiscountProductsViewModel}">
+                        <views:AllDiscountProductsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:NewDiscountProductViewModel}">
+                        <views:NewDiscountProductView/>
                     </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>

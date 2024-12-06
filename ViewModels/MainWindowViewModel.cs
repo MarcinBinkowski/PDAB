@@ -94,7 +94,9 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Reviews", new BaseCommand(() => ShowAllReviews())),
                 new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers())),
                 new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails())),
-                new CommandViewModel("Product Images", new BaseCommand(() => ShowAllProductImages()))
+                new CommandViewModel("Product Images", new BaseCommand(() => ShowAllProductImages())),
+                new CommandViewModel("Discount Products", new BaseCommand(() => ShowAllDiscountProducts()))
+
 
           };
         }
@@ -382,6 +384,20 @@ namespace PDAB.ViewModels
     
             SetActiveWorkspace(workspace);
         }
+        private void ShowAllDiscountProducts()
+        {
+            AllDiscountProductsViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is AllDiscountProductsViewModel) 
+                    as AllDiscountProductsViewModel;
+    
+            if (workspace == null)
+            {
+                workspace = new AllDiscountProductsViewModel();
+                Workspaces.Add(workspace);
+            }
+    
+            SetActiveWorkspace(workspace);
+        }
         #endregion
         
         
@@ -450,6 +466,10 @@ namespace PDAB.ViewModels
             else if (ActiveWorkspace is AllProductImagesViewModel)
             {
                 CreateView(new NewProductImageViewModel());
+            }
+            else if (ActiveWorkspace is AllDiscountProductsViewModel)
+            {
+                CreateView(new NewDiscountProductViewModel());
             }
         }
         

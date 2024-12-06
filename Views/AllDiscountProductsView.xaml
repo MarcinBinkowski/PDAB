@@ -1,0 +1,15 @@
+<UserControl x:Class="PDAB.Views.AllDiscountProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding List}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding DiscountProductId}" Width="50"/>
+                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product.ProductName}" Width="150"/>
+                    <GridViewColumn Header="Discount" DisplayMemberBinding="{Binding Discount.DiscountName}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>
