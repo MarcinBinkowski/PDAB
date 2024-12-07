@@ -10,6 +10,7 @@ namespace PDAB.Helpers
 
         public BaseCommand(Action command, Func<bool> canExecute = null)
         {
+            Console.WriteLine("BaseCommand constructor called");
             ArgumentNullException.ThrowIfNull(nameof(command));
             _command = command;
             _canExecute = canExecute;
@@ -23,11 +24,14 @@ namespace PDAB.Helpers
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || _canExecute();
+            var result = _canExecute?.Invoke() ?? true;
+            Console.WriteLine($"CanExecute called, result: {result}");
+            return result;
         }
 
         public void RaiseCanExecuteChanged()
         {
+            Console.WriteLine("RaiseCanExecuteChanged");
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
         public event EventHandler CanExecuteChanged;

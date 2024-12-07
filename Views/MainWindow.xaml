@@ -65,7 +65,7 @@
                         Height="25"
                         Margin="0,0,10,0"/>
                 <Button Content="Delete"
-                        Command="{Binding ActiveWorkspace.DeleteCommand}"
+                        Command="{Binding ActiveWorkspace.DeleteCommand, UpdateSourceTrigger=PropertyChanged}"
                         Width="80"
                         Height="25"
                         Margin="0,0,10,0"/>

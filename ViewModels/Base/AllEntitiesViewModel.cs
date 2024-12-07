@@ -32,6 +32,7 @@ namespace PDAB.ViewModels
         {
             get
             {
+                Console.WriteLine("DeleteCommand");
                 if (_deleteCommand == null)
                     _deleteCommand = new BaseCommand(
                         () => DeleteSelected(),
@@ -79,12 +80,14 @@ namespace PDAB.ViewModels
             set
             {
                 _selectedItem = value;
+                Console.WriteLine($"SelectedItem changed to: {value}");
                 OnPropertyChanged(() => SelectedItem);
                 (_deleteCommand as BaseCommand)?.RaiseCanExecuteChanged();
             }
         }
         private void DeleteSelected()
         {
+            Console.WriteLine("DeleteSelected called");
             if (SelectedItem == null) return;
 
             var result = MessageBox.Show(

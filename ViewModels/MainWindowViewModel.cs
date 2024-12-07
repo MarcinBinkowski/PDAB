@@ -46,12 +46,16 @@ namespace PDAB.ViewModels
         
         public BaseWorkspaceViewModel ActiveWorkspace
         {
-            get => _activeWorkspace;
+            get
+            {
+                Console.WriteLine("Getting ActiveWorkspace");
+                return _activeWorkspace;
+            }
             set
             {
+                Console.WriteLine($"Setting ActiveWorkspace: {value?.GetType().Name}");
                 _activeWorkspace = value;
-                OnPropertyChanged("c");
-                (AddNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
+                OnPropertyChanged(() => ActiveWorkspace);
             }
         }
         public ICommand AddNewItemCommand
