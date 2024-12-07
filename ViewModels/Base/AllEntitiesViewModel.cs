@@ -72,8 +72,8 @@ namespace PDAB.ViewModels
         #region Helpers
         public abstract void Load();
 
-        protected T _selectedItem;
-        public T SelectedItem
+        protected T _selectedItem; // set property on every AllView
+        public T SelectedItem 
         {
             get => _selectedItem;
             set
