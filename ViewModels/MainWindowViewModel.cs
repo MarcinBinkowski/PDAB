@@ -50,7 +50,7 @@ namespace PDAB.ViewModels
             set
             {
                 _activeWorkspace = value;
-                OnPropertyChanged("ActiveWorkspace");
+                OnPropertyChanged("c");
                 (AddNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
             }
         }

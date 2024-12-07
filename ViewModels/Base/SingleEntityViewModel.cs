@@ -46,6 +46,7 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
 
     public void SaveAndClose()
     {
+        // Implemented refresh after save
         if (ValidateBeforeSave())
         {
             Save();
