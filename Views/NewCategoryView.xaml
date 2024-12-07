@@ -1,5 +1,4 @@
-<!-- Views/NewCategoryView.xaml -->
-<UserControl x:Class="PDAB.Views.NewCategoryView"
+F<UserControl x:Class="PDAB.Views.NewCategoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid Margin="20">
@@ -12,11 +11,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Category Name -->
         <Label Grid.Row="0" Grid.Column="0" Content="Category Name:" Margin="0,0,10,10"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CategoryName}" Margin="0,0,0,10"/>
 
-        <!-- Save Button -->
         <Button Grid.Row="1" Grid.Column="1" Content="Save" 
                 Command="{Binding SaveCommand}"
                 HorizontalAlignment="Right" Width="80" Height="25"/>
