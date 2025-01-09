@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
@@ -96,6 +97,34 @@ namespace PDAB.ViewModels
                 item.ReviewDate = value;
                 OnPropertyChanged(() => ReviewDate);
             }
+        }
+        
+        protected override bool ValidateBeforeSave()
+        {
+
+            if (ReviewDate > DateTime.Now)
+            {
+                MessageBox.Show(
+                    "Review date cannot be in the future.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Comment) && Comment.Length < 5)
+            {
+                MessageBox.Show(
+                    "Comment must be at least 5 characters or null.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return false;
+            }
+
+            return true;
         }
 
         public override bool Save()

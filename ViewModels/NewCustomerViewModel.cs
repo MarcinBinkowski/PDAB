@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
@@ -58,6 +60,33 @@ namespace PDAB.ViewModels
                 item.Phone = value;
                 OnPropertyChanged(() => Phone);
             }
+        }
+        
+        protected override bool ValidateBeforeSave()
+        {
+            
+            if (!IsNameValid(FirstName))
+            {
+                MessageBox.Show("First name must be at least 2 characters long and contain only letters", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (!IsNameValid(LastName))
+            {
+                MessageBox.Show("Last name must be at least 2 characters long and contain only letters", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+    
+            return true;
+        }
+
+        private bool IsNameValid(string name)
+        {
+            Regex nameValidationRegex = new(@"^[a-zA-Z\s]{2,}$");
+
+            return !string.IsNullOrEmpty(name) && nameValidationRegex.IsMatch(name);
         }
 
         public override bool Save()

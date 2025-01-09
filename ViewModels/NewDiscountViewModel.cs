@@ -1,3 +1,4 @@
+using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
@@ -39,7 +40,29 @@ namespace PDAB.ViewModels
                 OnPropertyChanged(() => IsActive);
             }
         }
+        protected override bool ValidateBeforeSave()
+        {
+            if (item.DiscountPercentage < 0)
+            {
 
+                    MessageBox.Show("Discount Percentage cannot be negative.", 
+                        "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+
+            }
+            if (item.DiscountPercentage > 100)
+            {
+                MessageBox.Show("Discount Percentage cannot be greater than 100.", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (item.DiscountPercentage == 0)
+            {
+                MessageBox.Show("Remember: Discount Percentage can be set to 0 only for testing purposes.", 
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            return true;
+        }
         public override bool Save()
         {
             try

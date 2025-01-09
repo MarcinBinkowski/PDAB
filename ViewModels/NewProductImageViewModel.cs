@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
@@ -50,6 +51,27 @@ namespace PDAB.ViewModels
             }
         }
 
+        protected override bool ValidateBeforeSave()
+        {
+            if (!IsImageUrlValid(ImageUrl))
+            {
+                MessageBox.Show("Image URL must start with http:// or https:// and be a valid URL.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        private bool IsImageUrlValid(string imageUrl)
+        {
+            Regex imageUrlValidationRegex = new(@"^https?:\/\/\S+$");
+
+            return !string.IsNullOrEmpty(imageUrl) && imageUrlValidationRegex.IsMatch(imageUrl);
+        }
+        
+        
         public override bool Save()
         {
             try

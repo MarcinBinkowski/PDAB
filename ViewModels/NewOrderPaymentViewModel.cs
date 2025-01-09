@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
@@ -84,6 +85,33 @@ namespace PDAB.ViewModels
             }
         }
 
+        protected override bool ValidateBeforeSave()
+        {
+            if (Amount <= 0)
+            {
+                MessageBox.Show(
+                    "Amount must be greater than 0.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return false;
+            }
+
+            if (PaymentDate > DateTime.Now)
+            {
+                MessageBox.Show(
+                    "Payment Date cannot be in the future.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return false;
+            }
+
+            return true;
+        }
+        
         public override bool Save()
         {
             try

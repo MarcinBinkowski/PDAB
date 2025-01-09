@@ -84,7 +84,12 @@ namespace PDAB.ViewModels
                     "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
-
+            if (!IsPhoneValid(Phone))
+            {
+                MessageBox.Show("Phone number must be 7 to 12 digits long and can start with a plus sign", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
             return true;
         }
 
@@ -98,6 +103,12 @@ namespace PDAB.ViewModels
         {
             Regex emailValidationRegex = new(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
             return !string.IsNullOrEmpty(email) && emailValidationRegex.IsMatch(email);
+        }
+        private bool IsPhoneValid(string phone)
+        {
+            Regex phoneValidationRegex = new(@"^\+?[0-9]{7,12}$");
+
+            return !string.IsNullOrEmpty(phone) && phoneValidationRegex.IsMatch(phone);
         }
         
         public override bool Save()
