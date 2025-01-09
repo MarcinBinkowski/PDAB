@@ -66,7 +66,12 @@ namespace PDAB.ViewModels
                 {
                     _addNewItemCommand = new BaseCommand(
                         () => AddNewItem(),
-                        () => ActiveWorkspace != null);
+                        () =>
+                        {
+                            var canExecute = ActiveWorkspace?.GetType().Name.StartsWith("All") ?? false;
+                            Console.WriteLine($"AddNewItem CanExecute: {canExecute}, ActiveWorkspace: {ActiveWorkspace?.GetType().Name}");
+                            return canExecute;
+                        });
                 }
                 return _addNewItemCommand;
             }

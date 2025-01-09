@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 
 namespace PDAB.ViewModels
@@ -86,65 +87,78 @@ namespace PDAB.ViewModels
                 (_deleteCommand as BaseCommand)?.RaiseCanExecuteChanged();
             }
         }
+        public class CountResult
+        {
+            public int Count { get; set; }
+        }
+
+        private bool HasReferences(T entity)
+        {
+            // had problems with EF
+            var entityType = dbContext.Model.FindEntityType(typeof(T));
+            var referencingForeignKeys = entityType.GetReferencingForeignKeys();
+            var primaryKeyProperty = entityType.FindPrimaryKey().Properties[0];
+            var primaryKeyValue = primaryKeyProperty.PropertyInfo.GetValue(entity);
+
+            var connection = dbContext.Database.GetDbConnection();
+            if (connection.State != System.Data.ConnectionState.Open)
+                connection.Open();
+
+            try
+            {
+                foreach (var fk in referencingForeignKeys)
+                {
+                    var tableName = fk.DeclaringEntityType.GetTableName();
+                    var columnName = fk.Properties.First().GetColumnName();
+
+                    using var command = connection.CreateCommand();
+                    command.CommandText = $"SELECT COUNT(1) FROM {tableName} WHERE {columnName} = @id";
+            
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = "@id";
+                    parameter.Value = primaryKeyValue;
+                    command.Parameters.Add(parameter);
+
+                    var count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            finally
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+
+            return false;
+        }
+        
         private void DeleteSelected()
         {
             if (SelectedItem == null) return;
 
+            if (HasReferences(SelectedItem))
+            {
+                MessageBox.Show(
+                    "This record is referenced by other tables and cannot be deleted.\nRemove related records first.",
+                    "Delete Failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
             try
             {
-                var result = MessageBox.Show(
-                    "Are you sure you want to delete this item?",
-                    "Confirm Delete",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    if (typeof(T) == typeof(Discount))
-                    {
-                        var discount = SelectedItem as Discount;
-                        var hasRelatedOrders = dbContext.OrderDetails
-                            .Any(od => od.DiscountId == discount.DiscountId);
-
-                        if (hasRelatedOrders)
-                        {
-                            MessageBox.Show(
-                                "Cannot delete this discount because it is used in orders.\nRemove related orders first.",
-                                "Delete Failed",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                            return;
-                        }
-                    }
-
-                    dbContext.Set<T>().Remove(SelectedItem);
-                    dbContext.SaveChanges();
-                    Load();
-                }
+                dbContext.Set<T>().Remove(SelectedItem);
+                dbContext.SaveChanges();
+                Load();
             }
             catch (DbUpdateException ex)
             {
-                MessageBox.Show(
-                    "Cannot delete this item because it is referenced by other records.",
-                    "Delete Failed",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                MessageBox.Show("Error deleting record.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            // Console.WriteLine("DeleteSelected called");
-            // if (SelectedItem == null) return;
-            //
-            // var result = MessageBox.Show(
-            //     "Are you sure you want to delete this item?",
-            //     "Confirm Delete",
-            //     MessageBoxButton.YesNo,
-            //     MessageBoxImage.Warning);
-            //
-            // if (result == MessageBoxResult.Yes)
-            // {
-            //     dbContext.Set<T>().Remove(SelectedItem);
-            //     dbContext.SaveChanges();
-            //     Load();
-            // }
         }
         #endregion
     }
