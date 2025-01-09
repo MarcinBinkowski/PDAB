@@ -4,6 +4,7 @@ using PDAB.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace PDAB.ViewModels
@@ -87,21 +88,63 @@ namespace PDAB.ViewModels
         }
         private void DeleteSelected()
         {
-            Console.WriteLine("DeleteSelected called");
             if (SelectedItem == null) return;
 
-            var result = MessageBox.Show(
-                "Are you sure you want to delete this item?",
-                "Confirm Delete",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                dbContext.Set<T>().Remove(SelectedItem);
-                dbContext.SaveChanges();
-                Load();
+                var result = MessageBox.Show(
+                    "Are you sure you want to delete this item?",
+                    "Confirm Delete",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (typeof(T) == typeof(Discount))
+                    {
+                        var discount = SelectedItem as Discount;
+                        var hasRelatedOrders = dbContext.OrderDetails
+                            .Any(od => od.DiscountId == discount.DiscountId);
+
+                        if (hasRelatedOrders)
+                        {
+                            MessageBox.Show(
+                                "Cannot delete this discount because it is used in orders.\nRemove related orders first.",
+                                "Delete Failed",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+                    dbContext.Set<T>().Remove(SelectedItem);
+                    dbContext.SaveChanges();
+                    Load();
+                }
             }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show(
+                    "Cannot delete this item because it is referenced by other records.",
+                    "Delete Failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            // Console.WriteLine("DeleteSelected called");
+            // if (SelectedItem == null) return;
+            //
+            // var result = MessageBox.Show(
+            //     "Are you sure you want to delete this item?",
+            //     "Confirm Delete",
+            //     MessageBoxButton.YesNo,
+            //     MessageBoxImage.Warning);
+            //
+            // if (result == MessageBoxResult.Yes)
+            // {
+            //     dbContext.Set<T>().Remove(SelectedItem);
+            //     dbContext.SaveChanges();
+            //     Load();
+            // }
         }
         #endregion
     }
