@@ -55,10 +55,11 @@
                         Orientation="Horizontal" 
                         Margin="10,0,10,10">
                 <Button Content="Add" 
-                        Command="{Binding AddNewItemCommand}"
+                        Command="{Binding Path=AddNewItemCommand, 
+                  Mode=OneWay, 
+                  UpdateSourceTrigger=PropertyChanged}"
                         Width="80" 
-                        Height="25" 
-                        Margin="0,0,10,0"/>
+                        Height="25"/>
                 <Button Content="Refresh" 
                         Command="{Binding ActiveWorkspace.RefreshCommand}"
                         Width="80" 

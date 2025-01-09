@@ -48,20 +48,23 @@ namespace PDAB.ViewModels
         {
             get
             {
-                Console.WriteLine("Getting ActiveWorkspace");
+                Console.WriteLine($"Getting ActiveWorkspace: {_activeWorkspace}. Type: {_activeWorkspace?.GetType().Name}");
                 return _activeWorkspace;
             }
             set
             {
-                Console.WriteLine($"Setting ActiveWorkspace: {value?.GetType().Name}");
                 _activeWorkspace = value;
+                Console.WriteLine($"ActiveWorkspace changed: {value?.GetType().Name}");
                 OnPropertyChanged(() => ActiveWorkspace);
+                CommandManager.InvalidateRequerySuggested(); 
+                (_addNewItemCommand as BaseCommand)?.RaiseCanExecuteChanged();
             }
         }
         public ICommand AddNewItemCommand
         {
             get
             {
+                Console.WriteLine("AddNewItemCommand getter called");
                 if (_addNewItemCommand == null)
                 {
                     _addNewItemCommand = new BaseCommand(
@@ -192,6 +195,7 @@ namespace PDAB.ViewModels
         
         private void ShowAllCategories()
         {
+            Console.WriteLine("ShowAllCategories called");
             AllCategoriesViewModel workspace = 
                 Workspaces.FirstOrDefault(vm => vm is AllCategoriesViewModel) as AllCategoriesViewModel;
     
