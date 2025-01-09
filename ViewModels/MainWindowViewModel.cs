@@ -154,7 +154,7 @@ namespace PDAB.ViewModels
             set
             {
                 _Tables = value;
-                OnPropertyChanged("Tables"); // Use string literal instead of lambda
+                OnPropertyChanged("Tables");
             }
         }
 

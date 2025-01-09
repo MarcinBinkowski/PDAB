@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -59,10 +60,18 @@ namespace PDAB.ViewModels
             }
         }
 
-        public override void Save()
+        public override bool Save()
         {
-            dbContext.Customers.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.Customers.Add(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
     }
 }

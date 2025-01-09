@@ -37,7 +37,7 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
     #endregion
 
     #region Helpers
-    public abstract void Save();
+    public abstract bool Save();
     protected virtual bool ValidateBeforeSave()
     {
         return true;
@@ -46,10 +46,16 @@ public abstract class SingleEntityViewModel<T> : BaseWorkspaceViewModel
 
     public void SaveAndClose()
     {
-        // Implemented refresh after save
         if (ValidateBeforeSave())
         {
-            Save();
+            if(!Save())
+            {
+                MessageBox.Show("Error saving entity. Please check all required fields.",
+                    "Save Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return;
+            }
 
             var mainVM = Application.Current.MainWindow.DataContext as MainWindowViewModel;
             if (this is NewRoleViewModel)

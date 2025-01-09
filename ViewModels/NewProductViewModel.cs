@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -105,10 +106,18 @@ namespace PDAB.ViewModels
             Manufacturers = new ObservableCollection<Manufacturer>(dbContext.Manufacturers.ToList());
         }
 
-        public override void Save()
+        public override bool Save()
         {
-            dbContext.Products.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.Products.Add(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
     }
 }

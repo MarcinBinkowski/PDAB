@@ -1,3 +1,6 @@
+using System.Text.RegularExpressions;
+using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -59,10 +62,56 @@ namespace PDAB.ViewModels
             }
         }
 
-        public override void Save()
+        protected override bool ValidateBeforeSave()
         {
-            dbContext.Employees.Add(item);
-            dbContext.SaveChanges();
+            
+            if (!IsNameValid(FirstName))
+            {
+                MessageBox.Show("First name must be at least 2 characters long and contain only letters", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (!IsNameValid(LastName))
+            {
+                MessageBox.Show("Last name must be at least 2 characters long and contain only letters", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            if (!IsEmailValid(Email))
+            {
+                MessageBox.Show("Please enter a valid email address", 
+                    "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsNameValid(string name)
+        {
+            Regex nameValidationRegex = new(@"^[a-zA-Z\s]{2,}$");
+
+            return !string.IsNullOrEmpty(name) && nameValidationRegex.IsMatch(name);
+        }
+        private bool IsEmailValid(string email)
+        {
+            Regex emailValidationRegex = new(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            return !string.IsNullOrEmpty(email) && emailValidationRegex.IsMatch(email);
+        }
+        
+        public override bool Save()
+        {
+            try
+            {
+                dbContext.Employees.Add(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
     }
 }

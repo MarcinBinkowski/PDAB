@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -105,25 +106,17 @@ namespace PDAB.ViewModels
             }
         }
 
-        public override void Save()
+        public override bool Save()
         {
-            if (string.IsNullOrEmpty(Password))
-            {
-                MessageBox.Show("Password is required", "Validation Error",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
             try
             {
-                item.PasswordHash = HashPassword(Password);
                 dbContext.Users.Add(item);
                 dbContext.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
+            catch (DbUpdateException)
             {
-                MessageBox.Show($"Error saving user: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
         }
     }

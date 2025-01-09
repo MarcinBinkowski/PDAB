@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 
 namespace PDAB.ViewModels
@@ -120,10 +121,19 @@ namespace PDAB.ViewModels
             return true;
         }
 
-        public override void Save()
+        public override bool Save()
         {
-            dbContext.OrderDetails.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.OrderDetails.Add(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+            
         }
     }
 }

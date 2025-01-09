@@ -1,4 +1,5 @@
-﻿using PDAB.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PDAB.Models;
 
 namespace PDAB.ViewModels
 {
@@ -42,10 +43,18 @@ namespace PDAB.ViewModels
         #endregion
 
         #region Helpers
-        public override void Save()
+        public override bool Save()
         {
-            dbContext.Roles.Add(item);
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.Roles.Add(item);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
         #endregion
     }
