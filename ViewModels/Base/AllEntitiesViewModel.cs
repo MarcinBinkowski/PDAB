@@ -2,7 +2,9 @@ using GalaSoft.MvvmLight.Messaging;
 using PDAB.Helpers;
 using PDAB.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -12,6 +14,9 @@ namespace PDAB.ViewModels
 {
     public abstract class AllEntitiesViewModel<T> : BaseWorkspaceViewModel where T : class
     {
+        private string _currentSortProperty;
+        private ListSortDirection _currentSortDirection;
+
         #region DB
         protected readonly PdabDbContext dbContext;
         #endregion
@@ -43,6 +48,16 @@ namespace PDAB.ViewModels
             }
         }
 
+        private BaseCommand<string> _sortCommand;
+        public ICommand SortCommand
+        {
+            get
+            {
+                if (_sortCommand == null)
+                    _sortCommand = new BaseCommand<string>(SortBy);
+                return _sortCommand;
+            }
+        }
         
         #endregion
 
@@ -159,6 +174,27 @@ namespace PDAB.ViewModels
             {
                 MessageBox.Show("Error deleting record.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void SortBy(string propertyName)
+        {
+            var view = CollectionViewSource.GetDefaultView(List);
+            view.SortDescriptions.Clear();
+
+            if (propertyName == _currentSortProperty)
+            {
+                _currentSortDirection = _currentSortDirection == ListSortDirection.Ascending
+                    ? ListSortDirection.Descending
+                    : ListSortDirection.Ascending;
+            }
+            else
+            {
+                _currentSortProperty = propertyName;
+                _currentSortDirection = ListSortDirection.Ascending;
+            }
+
+            view.SortDescriptions.Add(new SortDescription(_currentSortProperty, _currentSortDirection));
+            OnPropertyChanged(() => List);
         }
         #endregion
     }

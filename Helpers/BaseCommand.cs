@@ -3,37 +3,55 @@ using System.Windows.Input;
 
 namespace PDAB.Helpers
 {
-    internal class BaseCommand : ICommand
+    public class BaseCommand<T> : ICommand
     {
-        private readonly Action _command;
+        private readonly Action<T> _execute;
         private readonly Func<bool> _canExecute;
 
-        public BaseCommand(Action command, Func<bool> canExecute = null)
+        public BaseCommand(Action<T> execute, Func<bool> canExecute = null)
         {
-            Console.WriteLine("BaseCommand constructor called");
-            ArgumentNullException.ThrowIfNull(nameof(command));
-            _command = command;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+
         public void Execute(object parameter)
         {
-            Console.WriteLine($"BaseCommand.Execute called");
-            _command();
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            var result = _canExecute?.Invoke() ?? true;
-            Console.WriteLine($"CanExecute called, result: {result}");
-            return result;
+            _execute((T)parameter);
         }
 
         public void RaiseCanExecuteChanged()
         {
-            Console.WriteLine("RaiseCanExecuteChanged");
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    public class BaseCommand : ICommand
+    {
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
+
+        public BaseCommand(Action execute, Func<bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
         public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+
+        public void Execute(object parameter)
+        {
+            _execute();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
