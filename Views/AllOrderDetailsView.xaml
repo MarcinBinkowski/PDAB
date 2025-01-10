@@ -1,18 +1,76 @@
 <UserControl x:Class="PDAB.Views.AllOrderDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding OrderDetailId}" Width="50"/>
-                    <GridViewColumn Header="Order ID" DisplayMemberBinding="{Binding OrderId}" Width="70"/>
-                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product.ProductName}" Width="150"/>
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}" Width="70"/>
-                    <GridViewColumn Header="Unit Price" DisplayMemberBinding="{Binding UnitPrice, StringFormat=C}" Width="100"/>
-                    <GridViewColumn Header="Discount" DisplayMemberBinding="{Binding Discount.DiscountName}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <ListView ItemsSource="{Binding List}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="50">
+                    <GridViewColumn.Header>
+                        <Button Content="ID" Command="{Binding SortCommand}" 
+                                CommandParameter="OrderDetailId" Width="45"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding OrderDetailId}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="100">
+                    <GridViewColumn.Header>
+                        <Button Content="Order ID" Command="{Binding SortCommand}" 
+                                CommandParameter="OrderId" Width="95"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding OrderId}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="150">
+                    <GridViewColumn.Header>
+                        <Button Content="Product" Command="{Binding SortCommand}" 
+                                CommandParameter="Product.ProductName" Width="145"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Product.ProductName}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="100">
+                    <GridViewColumn.Header>
+                        <Button Content="Quantity" Command="{Binding SortCommand}" 
+                                CommandParameter="Quantity" Width="95"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Quantity}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="120">
+                    <GridViewColumn.Header>
+                        <Button Content="Unit Price" Command="{Binding SortCommand}" 
+                                CommandParameter="UnitPrice" Width="115"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding UnitPrice, StringFormat=C}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="150">
+                    <GridViewColumn.Header>
+                        <Button Content="Discount" Command="{Binding SortCommand}" 
+                                CommandParameter="Discount.DiscountName" Width="145"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Discount.DiscountName}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
 </UserControl>

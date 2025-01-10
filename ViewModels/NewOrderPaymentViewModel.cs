@@ -108,6 +108,10 @@ namespace PDAB.ViewModels
                 );
                 return false;
             }
+            Console.WriteLine($"Saving OrderPayment: OrderId={OrderId}, " + 
+                              $"PaymentMethodId={PaymentMethodId}, " +
+                              $"Amount={Amount}, " +
+                              $"PaymentDate={PaymentDate}");
 
             return true;
         }
@@ -116,12 +120,25 @@ namespace PDAB.ViewModels
         {
             try
             {
+                item = new OrderPayment
+                {
+                    OrderId = OrderId,
+                    PaymentMethodId = PaymentMethodId,
+                    Amount = Amount,
+                    PaymentDate = PaymentDate
+                };
                 dbContext.OrderPayments.Add(item);
                 dbContext.SaveChanges();
                 return true;
             }
-            catch (DbUpdateException)
+            catch (Exception ex)
             {
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("InnerException: " + ex.InnerException.Message);
+                }
+                Console.WriteLine($"Error saving OrderPayment: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
                 return false;
             }
         }

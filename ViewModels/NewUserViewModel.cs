@@ -110,6 +110,7 @@ namespace PDAB.ViewModels
         {
             try
             {
+                item.PasswordHash = HashPassword(Password);
                 dbContext.Users.Add(item);
                 dbContext.SaveChanges();
                 return true;

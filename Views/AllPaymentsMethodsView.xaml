@@ -1,14 +1,32 @@
 <UserControl x:Class="PDAB.Views.AllPaymentMethodsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding PaymentMethodId}" Width="50"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding MethodName}" Width="200"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <ListView ItemsSource="{Binding List}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="50">
+                    <GridViewColumn.Header>
+                        <Button Content="ID" Command="{Binding SortCommand}" 
+                                CommandParameter="PaymentMethodId" Width="45"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PaymentMethodId}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="200">
+                    <GridViewColumn.Header>
+                        <Button Content="Method Name" Command="{Binding SortCommand}" 
+                                CommandParameter="MethodName" Width="195"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MethodName}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
 </UserControl>

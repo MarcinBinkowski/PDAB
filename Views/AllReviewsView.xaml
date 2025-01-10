@@ -1,17 +1,65 @@
 <UserControl x:Class="PDAB.Views.AllReviewsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ReviewId}" Width="50"/>
-                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product.ProductName}" Width="150"/>
-                    <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding Rating}" Width="60"/>
-                    <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding Comment}" Width="200"/>
-                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding ReviewDate, StringFormat={}{0:g}}" Width="130"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <ListView ItemsSource="{Binding List}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="50">
+                    <GridViewColumn.Header>
+                        <Button Content="ID" Command="{Binding SortCommand}" 
+                                CommandParameter="ReviewId" Width="45"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ReviewId}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="150">
+                    <GridViewColumn.Header>
+                        <Button Content="Product" Command="{Binding SortCommand}" 
+                                CommandParameter="Product.ProductName" Width="145"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Product.ProductName}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="80">
+                    <GridViewColumn.Header>
+                        <Button Content="Rating" Command="{Binding SortCommand}" 
+                                CommandParameter="Rating" Width="75"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Rating}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="200">
+                    <GridViewColumn.Header>
+                        <Button Content="Comment" Command="{Binding SortCommand}" 
+                                CommandParameter="Comment" Width="195"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Comment}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="120">
+                    <GridViewColumn.Header>
+                        <Button Content="Review Date" Command="{Binding SortCommand}" 
+                                CommandParameter="ReviewDate" Width="115"/>
+                    </GridViewColumn.Header>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ReviewDate, StringFormat=d}"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
 </UserControl>
