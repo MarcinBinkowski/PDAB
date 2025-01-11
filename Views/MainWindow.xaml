@@ -1,216 +1,136 @@
 ﻿<Window x:Class="PDAB.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="PDAB" Height="450" Width="800"
+        xmlns:vm="clr-namespace:PDAB.ViewModels"
+        xmlns:views="clr-namespace:PDAB.Views"
+        Title="PDAB" 
+        Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        FontFamily="{materialDesign:MaterialDesignFont}"
-        xmlns:views="clr-namespace:PDAB.Views"
-        xmlns:viewmodels="clr-namespace:PDAB.ViewModels">
-    <Grid>
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <DataTemplate DataType="{x:Type vm:AllOrdersViewModel}">
+            <views:AllOrdersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllProductsViewModel}">
+            <views:AllProductsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllCustomersViewModel}">
+            <views:AllCustomersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllEmployeesViewModel}">
+            <views:AllEmployeesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllRolesViewModel}">
+            <views:AllRolesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllReviewsViewModel}">
+            <views:AllReviewsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllManufacturersViewModel}">
+            <views:AllManufacturersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllCategoriesViewModel}">
+            <views:AllCategoriesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllDiscountProductsViewModel}">
+            <views:AllDiscountProductsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderStatusViewModel}">
+            <views:AllOrderStatusView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllPaymentMethodsViewModel}">
+            <views:AllPaymentMethodsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllProductImagesViewModel}">
+            <views:AllProductImagesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:OrderProductSelectionViewModel}">
+            <views:OrderProductSelectionView/>
+        </DataTemplate>
+    </Window.Resources>
+
+ <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <TextBlock Text="Tables" 
-                      FontSize="16" 
-                      FontWeight="Bold" 
-                      Margin="15,10,10,5"/>
-
-            <StackPanel Grid.Row="1"
-                      Background="#F0F0F0" 
-                      Margin="5">
+        <!-- Left Navigation Panel -->
+        <materialDesign:Card Grid.Column="0" Margin="8" UniformCornerRadius="8">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Commands}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding DisplayName}"
-                                    Command="{Binding Command}"
-                                    Margin="2,3"
-                                    Height="24"
-                                    HorizontalAlignment="Stretch"
-                                    />
+                            <Button Style="{StaticResource NavButton}"
+                                    Command="{Binding Command}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ViewList"
+                                                           Height="24" Width="24"
+                                                           Margin="0,0,8,0"
+                                                           VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding DisplayName}"
+                                             VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </StackPanel>
-        </Grid>
+            </ScrollViewer>
+        </materialDesign:Card>
 
-        <Grid Grid.Column="1">
+        <!-- Content Area -->
+        <Grid Grid.Column="1" Margin="0,8,8,8">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Workspace" 
-                      FontSize="16" 
-                      FontWeight="Bold" 
-                      Margin="10,10,10,5"/>
+            <!-- Command Bar -->
+            <materialDesign:Card Grid.Row="0" Margin="0,0,0,8" UniformCornerRadius="8">
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding AddCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" Margin="0,0,8,0"/>
+                            <TextBlock Text="Add"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding RefreshCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,8,0"/>
+                            <TextBlock Text="Refresh"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding DeleteCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Delete" Margin="0,0,8,0"/>
+                            <TextBlock Text="Delete"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
 
-            <StackPanel Grid.Row="1" 
-                        Orientation="Horizontal" 
-                        Margin="10,0,10,10">
-                <Button Content="Add" 
-                        Command="{Binding Path=AddNewItemCommand, 
-                  Mode=OneWay, 
-                  UpdateSourceTrigger=PropertyChanged}"
-                        Width="80" 
-                        Height="25"/>
-                <Button Content="Refresh" 
-                        Command="{Binding ActiveWorkspace.RefreshCommand}"
-                        Width="80" 
-                        Height="25"
-                        Margin="0,0,10,0"/>
-                <Button Content="Delete"
-                        Command="{Binding ActiveWorkspace.DeleteCommand, UpdateSourceTrigger=PropertyChanged}"
-                        Width="80"
-                        Height="25"
-                        Margin="0,0,10,0"/>
-            </StackPanel>
-
-            <TabControl Grid.Row="2" 
-                        ItemsSource="{Binding Workspaces}"
-                        IsSynchronizedWithCurrentItem="True"
-                        SelectedItem="{Binding ActiveWorkspace, Mode=TwoWay}"
-                        Margin="10,0,10,10">
-                <TabControl.Resources>
-                    <DataTemplate DataType="{x:Type viewmodels:AllRolesViewModel}">
-                        <views:AllRolesView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllCategoriesViewModel}">
-                        <views:AllCategoriesView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewRoleViewModel}">
-                        <views:NewRoleView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewCategoryViewModel}">
-                        <views:NewCategoryView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllDiscountsViewModel}">
-                        <views:AllDiscountsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewDiscountViewModel}">
-                        <views:NewDiscountView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllPaymentMethodsViewModel}">
-                        <views:AllPaymentMethodsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewPaymentMethodViewModel}">
-                        <views:NewPaymentMethodView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllOrderStatusViewModel}">
-                        <views:AllOrderStatusView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewOrderStatusViewModel}">
-                        <views:NewOrderStatusView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllManufacturersViewModel}">
-                        <views:AllManufacturersView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewManufacturerViewModel}">
-                        <views:NewManufacturerView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllCustomersViewModel}">
-                        <views:AllCustomersView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewCustomerViewModel}">
-                        <views:NewCustomerView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllEmployeesViewModel}">
-                        <views:AllEmployeesView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewEmployeeViewModel}">
-                        <views:NewEmployeeView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllProductsViewModel}">
-                        <views:AllProductsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewProductViewModel}">
-                        <views:NewProductView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllOrdersViewModel}">
-                        <views:AllOrdersView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewOrderViewModel}">
-                        <views:NewOrderView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllOrderPaymentsViewModel}">
-                        <views:AllOrderPaymentsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewOrderPaymentViewModel}">
-                        <views:NewOrderPaymentView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllReviewsViewModel}">
-                        <views:AllReviewsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewReviewViewModel}">
-                        <views:NewReviewView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllUsersViewModel}">
-                        <views:AllUsersView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewUserViewModel}">
-                        <views:NewUserView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllOrderDetailsViewModel}">
-                        <views:AllOrderDetailsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewOrderDetailViewModel}">
-                        <views:NewOrderDetailView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllProductImagesViewModel}">
-                        <views:AllProductImagesView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewProductImageViewModel}">
-                        <views:NewProductImageView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:AllDiscountProductsViewModel}">
-                        <views:AllDiscountProductsView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:NewDiscountProductViewModel}">
-                        <views:NewDiscountProductView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:OrderProductSelectionViewModel}">
-                        <views:OrderProductSelectionView/>
-                    </DataTemplate>
-                </TabControl.Resources>
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <Button DockPanel.Dock="Right" 
-                                    Command="{Binding CloseCommand}"
-                                    Content="✕"
-                                    Width="20"
-                                    Height="20"
-                                    Margin="5,0,0,0"
-                                    Background="Transparent"
-                                    BorderThickness="0">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Foreground" Value="Red"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                            <TextBlock Text="{Binding DisplayName}" 
-                                     VerticalAlignment="Center"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-            </TabControl>
+            <!-- Workspace Content -->
+            <materialDesign:Card Grid.Row="1" UniformCornerRadius="8">
+                <ContentControl Content="{Binding SelectedViewModel}"/>
+            </materialDesign:Card>
         </Grid>
     </Grid>
 </Window>
