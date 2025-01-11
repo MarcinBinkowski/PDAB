@@ -109,7 +109,6 @@ namespace PDAB.ViewModels
 
         private bool HasReferences(T entity)
         {
-            // had problems with EF
             var entityType = dbContext.Model.FindEntityType(typeof(T));
             var referencingForeignKeys = entityType.GetReferencingForeignKeys();
             var primaryKeyProperty = entityType.FindPrimaryKey().Properties[0];
@@ -127,8 +126,8 @@ namespace PDAB.ViewModels
                     var columnName = fk.Properties.First().GetColumnName();
 
                     using var command = connection.CreateCommand();
-                    command.CommandText = $"SELECT COUNT(1) FROM {tableName} WHERE {columnName} = @id";
-            
+                    command.CommandText = $"SELECT COUNT(1) FROM [{tableName}] WHERE [{columnName}] = @id";
+    
                     var parameter = command.CreateParameter();
                     parameter.ParameterName = "@id";
                     parameter.Value = primaryKeyValue;

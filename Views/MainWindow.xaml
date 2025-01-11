@@ -32,6 +32,9 @@
         <DataTemplate DataType="{x:Type vm:AllEmployeesViewModel}">
             <views:AllEmployeesView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllUsersViewModel}">
+            <views:AllUsersView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AllRolesViewModel}">
             <views:AllRolesView/>
         </DataTemplate>
@@ -47,8 +50,17 @@
         <DataTemplate DataType="{x:Type vm:AllDiscountProductsViewModel}">
             <views:AllDiscountProductsView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllDiscountsViewModel}">
+            <views:AllDiscountsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderDetailsViewModel}">
+            <views:AllOrderDetailsView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AllOrderStatusViewModel}">
             <views:AllOrderStatusView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderPaymentsViewModel}">
+            <views:AllOrderPaymentsView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AllPaymentMethodsViewModel}">
             <views:AllPaymentMethodsView/>
@@ -58,6 +70,54 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:OrderProductSelectionViewModel}">
             <views:OrderProductSelectionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewOrderViewModel}">
+            <views:NewOrderView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewProductViewModel}">
+            <views:NewProductView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewCustomerViewModel}">
+            <views:NewCustomerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewEmployeeViewModel}">
+            <views:NewEmployeeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewRoleViewModel}">
+            <views:NewRoleView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewCategoryViewModel}">
+            <views:NewCategoryView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewDiscountViewModel}">
+            <views:NewDiscountView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewOrderDetailViewModel}">
+            <views:NewOrderDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewOrderStatusViewModel}">
+            <views:NewOrderStatusView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewPaymentMethodViewModel}">
+            <views:NewPaymentMethodView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewProductImageViewModel}">
+            <views:NewProductImageView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewUserViewModel}">
+            <views:NewUserView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewReviewViewModel}">
+            <views:NewReviewView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NewManufacturerViewModel}">
+            <views:NewManufacturerView/>
+        </DataTemplate>        
+        <DataTemplate DataType="{x:Type vm:NewDiscountProductViewModel}">
+            <views:NewDiscountProductView/>
+        </DataTemplate>        
+        <DataTemplate DataType="{x:Type vm:NewOrderPaymentViewModel}">
+            <views:NewOrderPaymentView/>
         </DataTemplate>
     </Window.Resources>
 

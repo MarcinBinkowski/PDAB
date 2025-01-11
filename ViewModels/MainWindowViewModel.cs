@@ -10,6 +10,8 @@ public class MainWindowViewModel : BaseViewModel
     private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
     public BaseCommand RefreshCommand { get; private set; }
     public BaseCommand DeleteCommand { get; private set; } 
+    public BaseCommand AddCommand { get; private set; }
+
     public BaseViewModel SelectedViewModel
     {
         get => _selectedViewModel;
@@ -34,9 +36,10 @@ public class MainWindowViewModel : BaseViewModel
     }
     private void UpdateCommandStates()
     {
-        Console.WriteLine($"Updating command states. CanRefresh: {CanRefresh()}");
+        Console.WriteLine($"Updating command states. CanRefresh: {CanRefresh()}, CanAdd: {CanAdd()}, CanDelete: {CanDelete()}");
         DeleteCommand.RaiseCanExecuteChanged();
         RefreshCommand.RaiseCanExecuteChanged();
+        AddCommand.RaiseCanExecuteChanged();
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -62,24 +65,30 @@ public class MainWindowViewModel : BaseViewModel
 
     public MainWindowViewModel()
     {
+        AddCommand = new BaseCommand(OnAdd, CanAdd);
         RefreshCommand = new BaseCommand(OnRefresh, CanRefresh);
         DeleteCommand = new BaseCommand(OnDelete, CanDelete);
 
         Commands = new ObservableCollection<CommandViewModel>
         {
-            new CommandViewModel("Orders", new BaseCommand(() => ShowAllOrders())),
-            new CommandViewModel("Products", new BaseCommand(() => ShowAllProducts())),
             new CommandViewModel("Customers", new BaseCommand(() => ShowAllCustomers())),
             new CommandViewModel("Employees", new BaseCommand(() => ShowAllEmployees())),
-            new CommandViewModel("Roles", new BaseCommand(() => ShowAllRoles())),
+            new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers())),
             new CommandViewModel("Reviews", new BaseCommand(() => ShowAllReviews())),
+            new CommandViewModel("Roles", new BaseCommand(() => ShowAllRoles())),
             new CommandViewModel("Manufacturers", new BaseCommand(() => ShowAllManufacturers())),
             new CommandViewModel("Categories", new BaseCommand(() => ShowAllCategories())),
-            new CommandViewModel("Discount Products", new BaseCommand(() => ShowAllDiscountProducts())),
-            new CommandViewModel("Order Statuses", new BaseCommand(() => ShowAllOrderStatuses())),
-            new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods())),
+            new CommandViewModel("Products", new BaseCommand(() => ShowAllProducts())),
             new CommandViewModel("Product Images", new BaseCommand(() => ShowAllProductImages())),
-            new CommandViewModel("Add Order Products", new BaseCommand(() => ShowOrderProductSelection()))
+            new CommandViewModel("Discount Products", new BaseCommand(() => ShowAllDiscountProducts())),
+            new CommandViewModel("Discounts", new BaseCommand(() => ShowAllDiscounts())),
+            new CommandViewModel("Orders", new BaseCommand(() => ShowAllOrders())),
+            new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails())),
+            new CommandViewModel("Order Statuses", new BaseCommand(() => ShowAllOrderStatuses())),
+            new CommandViewModel("Order Payments", new BaseCommand(() => ShowAllOrderPayments())),
+            new CommandViewModel("Payment Methods", new BaseCommand(() => ShowAllPaymentMethods())),
+            new CommandViewModel("Add Order Products", new BaseCommand(() => ShowOrderProductSelection())),
+
         };
     }
 
@@ -110,7 +119,49 @@ public class MainWindowViewModel : BaseViewModel
             vm.Load();
         }
     }
+    private bool CanAdd()
+    {
+        Console.WriteLine($"CanAdd called, SelectedViewModel: {SelectedViewModel}");
+        return SelectedViewModel != null;
+    }
 
+    private void OnAdd()
+    {
+        if (SelectedViewModel is AllOrdersViewModel)
+            ShowWorkspace<NewOrderViewModel>();
+        else if (SelectedViewModel is AllProductsViewModel)
+            ShowWorkspace<NewProductViewModel>();
+        else if (SelectedViewModel is AllCustomersViewModel)
+            ShowWorkspace<NewCustomerViewModel>();
+        else if (SelectedViewModel is AllEmployeesViewModel)
+            ShowWorkspace<NewEmployeeViewModel>();
+        else if (SelectedViewModel is AllRolesViewModel)
+            ShowWorkspace<NewRoleViewModel>();
+        else if (SelectedViewModel is AllReviewsViewModel)
+            ShowWorkspace<NewReviewViewModel>();
+        else if (SelectedViewModel is AllManufacturersViewModel)
+            ShowWorkspace<NewManufacturerViewModel>();
+        else if (SelectedViewModel is AllCategoriesViewModel)
+            ShowWorkspace<NewCategoryViewModel>();
+        else if (SelectedViewModel is AllDiscountProductsViewModel)
+            ShowWorkspace<NewDiscountProductViewModel>();
+        else if (SelectedViewModel is AllDiscountsViewModel)
+            ShowWorkspace<NewDiscountViewModel>();
+        else if (SelectedViewModel is AllOrdersViewModel)
+            ShowWorkspace<NewOrderViewModel>();
+        else if (SelectedViewModel is AllOrderDetailsViewModel)
+            ShowWorkspace<NewOrderDetailViewModel>();
+        else if (SelectedViewModel is AllOrderStatusViewModel)
+            ShowWorkspace<NewOrderStatusViewModel>();
+        else if (SelectedViewModel is AllOrderPaymentsViewModel)
+            ShowWorkspace<NewOrderPaymentViewModel>();
+        else if (SelectedViewModel is AllPaymentMethodsViewModel)
+            ShowWorkspace<NewPaymentMethodViewModel>();
+        else if (SelectedViewModel is AllProductImagesViewModel)
+            ShowWorkspace<NewProductImageViewModel>();
+        else if (SelectedViewModel is AllUsersViewModel)
+            ShowWorkspace<NewUserViewModel>();
+    }
     private bool CanDelete()
     {
         if (SelectedViewModel == null)
@@ -212,7 +263,26 @@ public class MainWindowViewModel : BaseViewModel
     {
         ShowWorkspace<OrderProductSelectionViewModel>();
     }
+    private void ShowAllUsers()
+    {
+        ShowWorkspace<AllUsersViewModel>();
+    }
 
+    private void ShowAllDiscounts()
+    {
+        ShowWorkspace<AllDiscountsViewModel>();
+    }
+
+    private void ShowAllOrderDetails()
+    {
+        ShowWorkspace<AllOrderDetailsViewModel>();
+    }
+
+    private void ShowAllOrderPayments()
+    {
+        ShowWorkspace<AllOrderPaymentsViewModel>();
+    }
+    
     private void ShowWorkspace<T>() where T : BaseWorkspaceViewModel, new()
     {
         Console.WriteLine($"Opening workspace of type: {typeof(T).Name}");

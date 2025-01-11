@@ -51,8 +51,13 @@ namespace PDAB.ViewModels
                 dbContext.SaveChanges();
                 return true;
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException exception)
             {
+                Console.WriteLine(exception);
+                if (exception.InnerException != null)
+                {
+                    Console.WriteLine(exception.InnerException.Message);
+                }
                 return false;
             }
         }
