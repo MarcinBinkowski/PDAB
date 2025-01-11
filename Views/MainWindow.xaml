@@ -1,9 +1,15 @@
 ﻿<Window x:Class="PDAB.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="PDAB" Height="450" Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:views="clr-namespace:PDAB.Views"
-        xmlns:viewmodels="clr-namespace:PDAB.ViewModels"
-        Title="PDAB" Height="600" Width="800">
+        xmlns:viewmodels="clr-namespace:PDAB.ViewModels">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -173,6 +179,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:NewDiscountProductViewModel}">
                         <views:NewDiscountProductView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:OrderProductSelectionViewModel}">
+                        <views:OrderProductSelectionView/>
                     </DataTemplate>
                 </TabControl.Resources>
                 <TabControl.ItemTemplate>

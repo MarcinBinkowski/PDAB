@@ -4,62 +4,89 @@ using Microsoft.EntityFrameworkCore;
 using PDAB.Models;
 using PDAB.ViewModels;
 
-public class OrderProductSelectionViewModel : BusinessLogicViewModel
+namespace PDAB.ViewModels
 {
-    private ObservableCollection<ProductDisplayItem> _products;
-    private decimal _totalValue;
-
-    public ObservableCollection<ProductDisplayItem> Products
+    public class OrderProductSelectionViewModel : BusinessLogicViewModel
     {
-        get => _products;
-        set => SetField(ref _products, value);
-    }
+        private ObservableCollection<ProductDisplayItem> _products;
+        private decimal _totalValue;
 
-    public decimal TotalValue
-    {
-        get => _totalValue;
-        set => SetField(ref _totalValue, value);
-    }
-
-    public OrderProductSelectionViewModel() : base()
-    {
-        Products = new ObservableCollection<ProductDisplayItem>();
-        LoadProducts();
-    }
-
-    private async void LoadProducts()
-    {
-        var products = await dbContext.Products.ToListAsync();
-        foreach(var product in products)
+        public ObservableCollection<ProductDisplayItem> Products
         {
-            Products.Add(new ProductDisplayItem
+            get => _products;
+            set
             {
-                Product = product,
-                Image = LoadImage(product.ImageUrl)
-            });
+                _products = value;
+                OnPropertyChanged(nameof(Products));
+            }
+        }
+
+        public decimal TotalValue
+        {
+            get => _totalValue;
+            set
+            {
+                _totalValue = value;
+                OnPropertyChanged(nameof(TotalValue));
+            }
+        }
+
+        public OrderProductSelectionViewModel() : base()
+        {
+            Products = new ObservableCollection<ProductDisplayItem>();
+            LoadProducts();
+        }
+
+        private async void LoadProducts()
+        {
+            var products = await dbContext.Products
+                .Include(p => p.ProductImages)
+                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                Products.Add(new ProductDisplayItem
+                {
+                    Product = product,
+                    Image = LoadImage(product.ProductImages.FirstOrDefault()?.ImageUrl)
+                });
+            }
+        }
+
+        private BitmapImage LoadImage(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return null;
+
+            try
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = new Uri(url);
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                return image;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 
-    private BitmapImage LoadImage(string url)
+    public class ProductDisplayItem : BaseViewModel
     {
-        if(string.IsNullOrEmpty(url)) return null;
-        var image = new BitmapImage();
-        image.BeginInit();
-        image.UriSource = new Uri(url);
-        image.CacheOption = BitmapCacheOption.OnLoad;
-        image.EndInit();
-        return image;
-    }
-}
+        private int _quantity;
+        public Product Product { get; set; }
+        public BitmapImage Image { get; set; }
 
-public class ProductDisplayItem : BaseViewModel
-{
-    private int _quantity;
-    public Product Product { get; set; }
-    public BitmapImage Image { get; set; }
-    public int Quantity 
-    {
-        get => _quantity;
-        set => SetField(ref _quantity, value);
+        public int Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged(nameof(Quantity));
+            }
+        }
     }
 }

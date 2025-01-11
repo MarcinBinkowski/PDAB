@@ -1,12 +1,63 @@
 <UserControl x:Class="PDAB.Views.OrderProductSelectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:PDAB.Views"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13">
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <md:Card Grid.Row="0" Margin="16">
+            <TextBlock Text="{Binding TotalValue, StringFormat={}Total: {0:C}}"
+                      Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                      Margin="16"/>
+        </md:Card>
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Products}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <md:Card Margin="8" Width="220">
+                            <StackPanel>
+                                <Image Source="{Binding Image}"
+                                       Height="140" Stretch="UniformToFill"/>
+                                
+                                <StackPanel Margin="8">
+                                    <TextBlock Text="{Binding Product.Name}"
+                                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                                    
+                                    <TextBlock Text="{Binding Product.Price, StringFormat=C}"
+                                             Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                             Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                    
+                                    <StackPanel Orientation="Horizontal" 
+                                              Margin="0,8,0,0">
+                                        <TextBlock Text="Quantity:"
+                                                 Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                                 VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding Quantity}"
+                                                Style="{StaticResource MaterialDesignTextBox}"
+                                                Width="60"
+                                                Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </md:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

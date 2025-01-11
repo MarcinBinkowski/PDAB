@@ -107,7 +107,8 @@ namespace PDAB.ViewModels
                 new CommandViewModel("Users", new BaseCommand(() => ShowAllUsers())),
                 new CommandViewModel("Order Details", new BaseCommand(() => ShowAllOrderDetails())),
                 new CommandViewModel("Product Images", new BaseCommand(() => ShowAllProductImages())),
-                new CommandViewModel("Discount Products", new BaseCommand(() => ShowAllDiscountProducts()))
+                new CommandViewModel("Discount Products", new BaseCommand(() => ShowAllDiscountProducts())),
+                new CommandViewModel("Add Order Products", new BaseCommand(() => ShowOrderProductSelection()))
 
 
           };
@@ -409,6 +410,20 @@ namespace PDAB.ViewModels
                 Workspaces.Add(workspace);
             }
     
+            SetActiveWorkspace(workspace);
+        }
+        private void ShowOrderProductSelection()
+        {
+            OrderProductSelectionViewModel workspace = 
+                Workspaces.FirstOrDefault(vm => vm is OrderProductSelectionViewModel) 
+                    as OrderProductSelectionViewModel;
+
+            if (workspace == null)
+            {
+                workspace = new OrderProductSelectionViewModel();
+                Workspaces.Add(workspace);
+            }
+
             SetActiveWorkspace(workspace);
         }
         #endregion
