@@ -51,6 +51,7 @@ namespace PDAB.Helpers
 
         public void RaiseCanExecuteChanged()
         {
+            Console.WriteLine("RaiseCanExecuteChanged");
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }

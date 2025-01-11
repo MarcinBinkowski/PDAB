@@ -98,7 +98,7 @@ namespace PDAB.ViewModels
             {
                 _selectedItem = value;
                 Console.WriteLine($"SelectedItem changed to: {value}");
-                OnPropertyChanged(() => SelectedItem);
+                OnPropertyChanged(nameof(SelectedItem));
                 (_deleteCommand as BaseCommand)?.RaiseCanExecuteChanged();
             }
         }
