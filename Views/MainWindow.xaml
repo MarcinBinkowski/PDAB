@@ -6,84 +6,87 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:PDAB.ViewModels"
         xmlns:views="clr-namespace:PDAB.Views"
-        mc:Ignorable="d"
-        Title="{Binding DisplayName}" 
+        Title="PDAB" 
         Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        AllowsTransparency="True"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{materialDesign:MaterialDesignFont}"
-        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}">
+        FontFamily="{materialDesign:MaterialDesignFont}">
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
-    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+        
+    </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+ <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- Title Bar -->
-        <Grid Background="{DynamicResource PrimaryHueDarkBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="{Binding DisplayName}"
-                      Margin="12,0"
-                      VerticalAlignment="Center"
-                      Foreground="{DynamicResource MaterialDesignPaper}"/>
-
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
-                        Height="32" Width="32" Padding="0"
-                        Command="{Binding Minimize}">
-                    <materialDesign:PackIcon Kind="WindowMinimize"/>
-                </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
-                        Height="32" Width="32" Padding="0"
-                        Command="{Binding Maximize}">
-                    <materialDesign:PackIcon Kind="WindowMaximize"/>
-                </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
-                        Height="32" Width="32" Padding="0"
-                        Command="{Binding Close}">
-                    <materialDesign:PackIcon Kind="WindowClose"/>
-                </Button>
-            </StackPanel>
-        </Grid>
-
-        <!-- Content -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Navigation -->
-            <materialDesign:Card Grid.Column="0" Margin="8" UniformCornerRadius="8">
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+        <!-- Left Navigation Panel -->
+        <materialDesign:Card Grid.Column="0" Margin="8" UniformCornerRadius="8">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Button Style="{StaticResource NavigationButton}"
                         Command="{Binding ShowCategoriesCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Category" 
-                                               Height="24" Width="24"
-                                               Margin="0,0,8,0"
-                                               VerticalAlignment="Center"/>
+                    <Grid Width="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Category"
+                                                 Style="{StaticResource NavigationIcon}"/>
                         <TextBlock Text="Categories"
-                                 VerticalAlignment="Center"/>
-                    </StackPanel>
+                                   Style="{StaticResource NavigationText}"/>
+                    </Grid>
                 </Button>
+            </ScrollViewer>
+        </materialDesign:Card>
+
+        <!-- Content Area -->
+        <Grid Grid.Column="1" Margin="0,8,8,8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Command Bar -->
+            <materialDesign:Card Grid.Row="0" Margin="0,0,0,8" UniformCornerRadius="8">
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding AddCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" Margin="0,0,8,0"/>
+                            <TextBlock Text="Add"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding RefreshCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,8,0"/>
+                            <TextBlock Text="Refresh"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Command="{Binding DeleteCommand}"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Delete" Margin="0,0,8,0"/>
+                            <TextBlock Text="Delete"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </materialDesign:Card>
 
-            <!-- Workspace -->
-            <materialDesign:Card Grid.Column="1" Margin="8" UniformCornerRadius="8">
-                <ContentControl Content="{Binding Workspaces}"/>
+            <!-- Workspace Content -->
+            <materialDesign:Card Grid.Row="1" UniformCornerRadius="8">
+                <ContentControl Content="{Binding SelectedViewModel}"/>
             </materialDesign:Card>
         </Grid>
     </Grid>
