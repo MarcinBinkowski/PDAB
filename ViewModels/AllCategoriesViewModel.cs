@@ -3,10 +3,10 @@ using PDAB.Models;
 
 namespace PDAB.ViewModels
 {
-    public class AllCategoriesViewModel : AllEntitiesViewModel<Category>
+    public class AllCategoriesViewModel : BaseWorkspaceViewModel
     {
+        private readonly IRepository<Category> _categoryRepository;
         private ObservableCollection<Category> _categories;
-        private readonly IRepository<Category> _repository;
 
         public ObservableCollection<Category> Categories
         {
@@ -18,15 +18,16 @@ namespace PDAB.ViewModels
             }
         }
 
-        public AllCategoriesViewModel(IRepository<Category> repository) : base("Categories")
+        public AllCategoriesViewModel(IRepository<Category> categoryRepository)
         {
-            _repository = repository;
-            Load();
+            DisplayName = "Categories";
+            _categoryRepository = categoryRepository;
+            LoadCategories();
         }
 
-        public override async void Load()
+        private async void LoadCategories()
         {
-            Categories = await _repository.GetAllAsync();
+            Categories = await _categoryRepository.GetAllAsync();
         }
     }
 }

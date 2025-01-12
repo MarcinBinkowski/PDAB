@@ -26,6 +26,8 @@ namespace PDAB.ViewModels
         
         # region commands
         public ICommand ShowCategoriesCommand => new BaseCommand(() => ShowCategories());
+        public ICommand ShowCustomersCommand => new BaseCommand(() => ShowCustomers());
+
         # endregion
         
         public MainWindowViewModel(IRepositoryFactory repositoryFactory)
@@ -37,11 +39,16 @@ namespace PDAB.ViewModels
 
         private void ShowCategories()
         {
-            var categoryRepo = _repositoryFactory.GetRepository<Category>();
-            var viewModel = new AllCategoriesViewModel(categoryRepo);
-            AddWorkspace(viewModel);
+            Console.WriteLine("ShowCategories called");
+            var viewModel = new AllCategoriesViewModel(_repositoryFactory.GetRepository<Category>());
+            Workspaces.Add(viewModel);
         }
 
+        private void ShowCustomers()
+        {
+            var viewModel = new AllCustomersViewModel(_repositoryFactory.GetRepository<Customer>());
+            AddWorkspace(viewModel);
+        }
         private void AddWorkspace(BaseWorkspaceViewModel workspace)
         {
             var existing = Workspaces.FirstOrDefault(w => w.DisplayName == workspace.DisplayName);

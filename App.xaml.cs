@@ -29,6 +29,7 @@ namespace PDAB
             # region viewmodels
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<AllCategoriesViewModel>();
+            services.AddTransient<AllCustomersViewModel>();
             # endregion
             
             services.AddSingleton<MainWindow>();

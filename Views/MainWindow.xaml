@@ -14,12 +14,12 @@
         FontFamily="{materialDesign:MaterialDesignFont}">
 
     <Window.Resources>
-        <Style x:Key="NavButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        </Style>
-        
+        <DataTemplate DataType="{x:Type vm:AllCategoriesViewModel}">
+            <views:AllCategoriesView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllCustomersViewModel}">
+            <views:AllCustomersView />
+        </DataTemplate>
     </Window.Resources>
 
  <Grid>
@@ -41,6 +41,19 @@
                         <materialDesign:PackIcon Kind="Category"
                                                  Style="{StaticResource NavigationIcon}"/>
                         <TextBlock Text="Categories"
+                                   Style="{StaticResource NavigationText}"/>
+                    </Grid>
+                </Button>
+                <Button Style="{StaticResource NavigationButton}"
+                        Command="{Binding ShowCustomersCommand}">
+                    <Grid Width="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="AccountGroup" 
+                                                 Style="{StaticResource NavigationIcon}"/>
+                        <TextBlock Text="Customers" 
                                    Style="{StaticResource NavigationText}"/>
                     </Grid>
                 </Button>
@@ -86,7 +99,13 @@
 
             <!-- Workspace Content -->
             <materialDesign:Card Grid.Row="1" UniformCornerRadius="8">
-                <ContentControl Content="{Binding SelectedViewModel}"/>
+                <ItemsControl ItemsSource="{Binding Workspaces}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </materialDesign:Card>
         </Grid>
     </Grid>

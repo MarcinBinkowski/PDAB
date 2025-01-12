@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
-    <!-- Navigation Button Style -->
     <Style x:Key="NavigationButton"
            TargetType="Button"
            BasedOn="{StaticResource MaterialDesignRaisedSecondaryDarkButton}">
@@ -12,11 +11,8 @@
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="8"/>
         <Setter Property="materialDesign:ShadowAssist.Darken" Value="True"/>
 
-        <!-- IMPORTANT: Prevent auto layout of icon/text -->
-        <Setter Property="materialDesign:ButtonAssist.ContentAutoLayout" Value="False"/>
     </Style>
 
-    <!-- Navigation Icon Style -->
     <Style x:Key="NavigationIcon" TargetType="materialDesign:PackIcon">
         <Setter Property="Grid.Column" Value="0"/>
         <Setter Property="Height" Value="24"/>
@@ -26,7 +22,6 @@
         <Setter Property="Foreground" Value="{DynamicResource MaterialDesignPaper}"/>
     </Style>
 
-    <!-- Navigation Text Style -->
     <Style x:Key="NavigationText" TargetType="TextBlock">
         <Setter Property="Grid.Column" Value="1"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -34,5 +29,5 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Foreground" Value="{DynamicResource MaterialDesignPaper}"/>
     </Style>
-
+    
 </ResourceDictionary>
