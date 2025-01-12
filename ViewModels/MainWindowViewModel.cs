@@ -1,28 +1,55 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using PDAB.Helpers;
 using PDAB.Models;
-using PDAB.ViewModels;
+using PDAB.Repository;
 
 namespace PDAB.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly ObservableCollection<BaseWorkspaceViewModel> _workspaces;
+        private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
 
+        public ObservableCollection<BaseWorkspaceViewModel> Workspaces
+        {
+            get => _workspaces;
+            set
+            {
+                _workspaces = value;
+                OnPropertyChanged(nameof(Workspaces));
+            }
+        }
+        
+
+        
+        # region commands
+        public ICommand ShowCategoriesCommand => new BaseCommand(() => ShowCategories());
+        # endregion
+        
         public MainWindowViewModel(IRepositoryFactory repositoryFactory)
         {
+            DisplayName = "PDAB Marcin Binkowski";
             _repositoryFactory = repositoryFactory;
-            _workspaces = new ObservableCollection<BaseWorkspaceViewModel>();
+            Workspaces = new ObservableCollection<BaseWorkspaceViewModel>();
         }
 
         private void ShowCategories()
         {
             var categoryRepo = _repositoryFactory.GetRepository<Category>();
-            var categoriesVm = new AllCategoriesViewModel(categoryRepo);
-            _workspaces.Add(categoriesVm);
+            var viewModel = new AllCategoriesViewModel(categoryRepo);
+            AddWorkspace(viewModel);
+        }
+
+        private void AddWorkspace(BaseWorkspaceViewModel workspace)
+        {
+            var existing = Workspaces.FirstOrDefault(w => w.DisplayName == workspace.DisplayName);
+            if (existing != null)
+            {
+                Workspaces.Remove(existing);
+            }
+            Workspaces.Add(workspace);
         }
     }
 }

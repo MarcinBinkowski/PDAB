@@ -19,27 +19,35 @@ namespace PDAB
 
         private void ConfigureServices(IServiceCollection services)
         {
-            // Register DbContext
             services.AddDbContext<PdabDbContext>();
 
-            // Register repositories
+            # region repositories
+            services.AddScoped<IRepositoryFactory, RepositoryFactory>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-            // Register ViewModels
+            # endregion
+            
+            # region viewmodels
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<AllCategoriesViewModel>();
-
-            // Register MainWindow
+            # endregion
+            
             services.AddSingleton<MainWindow>();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>();
             mainWindow.Show();
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_serviceProvider is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+            base.OnExit(e);
         }
     }
 }

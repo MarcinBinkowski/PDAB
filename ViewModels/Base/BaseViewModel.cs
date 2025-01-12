@@ -24,12 +24,12 @@ namespace PDAB.ViewModels
             get { return new BaseCommand(CloseApplication); }
         }
 
-        public ICommand Maximice
+        public ICommand Maximize
         {
             get { return new BaseCommand(MaximizeApplication); }
         }
 
-        public ICommand Minimice
+        public ICommand Minimize
         {
             get { return new BaseCommand(MinimizeApplication); }
         }
