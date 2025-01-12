@@ -10,6 +10,8 @@ namespace PDAB.Helpers
 
         public BaseCommand(Action<T> execute, Func<bool> canExecute = null)
         {
+            Console.WriteLine($"Creating command: {execute}, {canExecute}.");
+
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }

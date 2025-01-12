@@ -5,18 +5,28 @@ namespace PDAB.ViewModels
 {
     public class AllCategoriesViewModel : AllEntitiesViewModel<Category>
     {
-        public AllCategoriesViewModel()
-            :base("Categories")
+        private ObservableCollection<Category> _categories;
+        private readonly IRepository<Category> _repository;
+
+        public ObservableCollection<Category> Categories
         {
+            get => _categories;
+            set
+            {
+                _categories = value;
+                OnPropertyChanged(nameof(Categories));
+            }
+        }
+
+        public AllCategoriesViewModel(IRepository<Category> repository) : base("Categories")
+        {
+            _repository = repository;
             Load();
         }
 
-        public override void Load()
+        public override async void Load()
         {
-            List = new ObservableCollection<Category>(
-                dbContext.Categories.ToList()
-            );
+            Categories = await _repository.GetAllAsync();
         }
     }
 }
-
