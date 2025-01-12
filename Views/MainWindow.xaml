@@ -31,32 +31,34 @@
         <!-- Left Navigation Panel -->
         <materialDesign:Card Grid.Column="0" Margin="8" UniformCornerRadius="8">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Button Style="{StaticResource NavigationButton}"
-                        Command="{Binding ShowCategoriesCommand}">
-                    <Grid Width="200">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Category"
-                                                 Style="{StaticResource NavigationIcon}"/>
-                        <TextBlock Text="Categories"
-                                   Style="{StaticResource NavigationText}"/>
-                    </Grid>
-                </Button>
-                <Button Style="{StaticResource NavigationButton}"
-                        Command="{Binding ShowCustomersCommand}">
-                    <Grid Width="200">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="AccountGroup" 
-                                                 Style="{StaticResource NavigationIcon}"/>
-                        <TextBlock Text="Customers" 
-                                   Style="{StaticResource NavigationText}"/>
-                    </Grid>
-                </Button>
+                <StackPanel>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowCategoriesCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="Category"
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Categories"
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowCustomersCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Customers" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
             </ScrollViewer>
         </materialDesign:Card>
 

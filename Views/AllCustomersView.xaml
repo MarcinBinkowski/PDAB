@@ -5,30 +5,10 @@
     
     <Grid Margin="16">
         <DataGrid ItemsSource="{Binding Customers}"
-                  AutoGenerateColumns="False"
+                  AutoGenerateColumns="True"
                   IsReadOnly="True"
                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                   materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" 
-                                    Binding="{Binding CustomerId}"
-                                    Width="Auto"/>
-                <DataGridTextColumn Header="First Name" 
-                                    Binding="{Binding FirstName}"
-                                    Width="*"/>
-                <DataGridTextColumn Header="Last Name" 
-                                    Binding="{Binding LastName}"
-                                    Width="*"/>
-                <DataGridTextColumn Header="Email" 
-                                    Binding="{Binding Email}"
-                                    Width="*"/>
-                <DataGridTextColumn Header="Phone" 
-                                    Binding="{Binding Phone}"
-                                    Width="*"/>
-                <DataGridTextColumn Header="Address" 
-                                    Binding="{Binding Address}"
-                                    Width="2*"/>
-            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </UserControl>

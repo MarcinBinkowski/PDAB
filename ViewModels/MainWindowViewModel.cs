@@ -11,7 +11,7 @@ namespace PDAB.ViewModels
     {
         private readonly IRepositoryFactory _repositoryFactory;
         private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
-
+        private BaseWorkspaceViewModel _activeWorkspace;
         public ObservableCollection<BaseWorkspaceViewModel> Workspaces
         {
             get => _workspaces;
@@ -21,7 +21,15 @@ namespace PDAB.ViewModels
                 OnPropertyChanged(nameof(Workspaces));
             }
         }
-        
+        public BaseWorkspaceViewModel ActiveWorkspace
+        {
+            get => _activeWorkspace;
+            set
+            {
+                _activeWorkspace = value;
+                OnPropertyChanged(nameof(ActiveWorkspace));
+            }
+        }
 
         
         # region commands
@@ -41,7 +49,7 @@ namespace PDAB.ViewModels
         {
             Console.WriteLine("ShowCategories called");
             var viewModel = new AllCategoriesViewModel(_repositoryFactory.GetRepository<Category>());
-            Workspaces.Add(viewModel);
+            AddWorkspace(viewModel);
         }
 
         private void ShowCustomers()
@@ -51,12 +59,9 @@ namespace PDAB.ViewModels
         }
         private void AddWorkspace(BaseWorkspaceViewModel workspace)
         {
-            var existing = Workspaces.FirstOrDefault(w => w.DisplayName == workspace.DisplayName);
-            if (existing != null)
-            {
-                Workspaces.Remove(existing);
-            }
+            Workspaces.Clear(); 
             Workspaces.Add(workspace);
+            ActiveWorkspace = workspace;
         }
     }
 }
