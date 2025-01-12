@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace PDAB.Views
 {
-    public partial class AllCustomersView : UserControl
+    public partial class BaseDataView : UserControl
     {
-        public AllCustomersView()
+        public BaseDataView()
         {
             InitializeComponent();
         }

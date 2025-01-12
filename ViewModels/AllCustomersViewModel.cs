@@ -3,31 +3,11 @@ using PDAB.Models;
 
 namespace PDAB.ViewModels
 {
-    public class AllCustomersViewModel : BaseWorkspaceViewModel
+    public class AllCustomersViewModel : BaseDataViewModel<Customer>
     {
-        private readonly IRepository<Customer> _customerRepository;
-        private ObservableCollection<Customer> _customers;
-
-        public ObservableCollection<Customer> Customers
+        public AllCustomersViewModel(IRepository<Customer> repository) 
+            : base(repository, "Customers")
         {
-            get => _customers;
-            set
-            {
-                _customers = value;
-                OnPropertyChanged(nameof(Customers));
-            }
-        }
-
-        public AllCustomersViewModel(IRepository<Customer> customerRepository)
-        {
-            DisplayName = "Customers";
-            _customerRepository = customerRepository;
-            LoadCustomers();
-        }
-
-        private async void LoadCustomers()
-        {
-            Customers = await _customerRepository.GetAllAsync();
         }
     }
 }
