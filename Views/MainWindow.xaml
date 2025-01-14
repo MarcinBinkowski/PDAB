@@ -20,11 +20,11 @@
         <DataTemplate DataType="{x:Type vm:AllCustomersViewModel}">
             <views:BaseDataView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:AddEntityViewModel`1}">
-            <views:AddEntityView />
+        <DataTemplate DataType="{x:Type vm:AddCategoryViewModel}">
+            <views:AddCategoryView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:BaseDataViewModel`1}">
-            <views:BaseDataView />
+        <DataTemplate DataType="{x:Type vm:AddCustomerViewModel}">
+            <views:AddCustomerView/>
         </DataTemplate>
     </Window.Resources>
 
