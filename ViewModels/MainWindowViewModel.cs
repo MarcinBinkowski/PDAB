@@ -10,17 +10,19 @@ namespace PDAB.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
+        private ObservableCollection<BaseWorkspaceViewModel?> _workspaces;
         private BaseWorkspaceViewModel _activeWorkspace;
 
         public ICommand AddCommand => new BaseCommand(AddNew);
 
         private void AddNew()
         {
-            BaseWorkspaceViewModel viewModel = ActiveWorkspace switch
+            BaseWorkspaceViewModel? viewModel = ActiveWorkspace switch
             {
-                BaseDataViewModel<Category> => new AddCategoryViewModel(_repositoryFactory.GetRepository<Category>()),
-                BaseDataViewModel<Customer> => new AddCustomerViewModel(_repositoryFactory.GetRepository<Customer>()),
+                BaseDataViewModel<Category> categoryView => 
+                    new AddCategoryViewModel(_repositoryFactory.GetRepository<Category>()),
+                BaseDataViewModel<Customer> customerView => 
+                    new AddCustomerViewModel(_repositoryFactory.GetRepository<Customer>()),
                 _ => null
             };
 
@@ -29,9 +31,14 @@ namespace PDAB.ViewModels
                 viewModel.RequestClose += async (s, e) => 
                 {
                     Workspaces.Remove(viewModel);
-                    if (ActiveWorkspace is BaseDataViewModel dataView)
+                    switch (ActiveWorkspace)
                     {
-                        await dataView.RefreshAsync();
+                        case BaseDataViewModel<Category> categoryView:
+                            await categoryView.RefreshAsync();
+                            break;
+                        case BaseDataViewModel<Customer> customerView:
+                            await customerView.RefreshAsync();
+                            break;
                     }
                 };
                 Workspaces.Clear();
@@ -39,7 +46,7 @@ namespace PDAB.ViewModels
             }
         }
 
-        public ObservableCollection<BaseWorkspaceViewModel> Workspaces
+        public ObservableCollection<BaseWorkspaceViewModel?> Workspaces
         {
             get => _workspaces;
             set
@@ -69,7 +76,7 @@ namespace PDAB.ViewModels
         {
             DisplayName = "PDAB Marcin Binkowski";
             _repositoryFactory = repositoryFactory;
-            Workspaces = new ObservableCollection<BaseWorkspaceViewModel>();
+            Workspaces = new ObservableCollection<BaseWorkspaceViewModel?>();
         }
         private void ShowCategories()
         {
