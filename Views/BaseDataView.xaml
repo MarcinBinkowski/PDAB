@@ -5,6 +5,7 @@
 
     <Grid Margin="8">
         <DataGrid ItemsSource="{Binding Items}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="True"
                   IsReadOnly="False"
                   CanUserSortColumns="True"

@@ -21,12 +21,21 @@ namespace PDAB.ViewModels
             execute: async () => await RefreshActiveWorkspace(),
             canExecute: () => CanRefresh()
         );
-
-        public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand<object>(
-            execute: async (item) => await DeleteItem(item),
-            canExecute: (item) => item != null && ActiveWorkspace is BaseDataViewModel<>
+        public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand(
+            execute: async () => await DeleteSelectedItem(),
+            canExecute: () => GetSelectedItem() != null
         );
 
+        private object? GetSelectedItem()
+        {
+            Console.WriteLine("GetSelectedItem called");
+            return ActiveWorkspace switch
+            {
+                BaseDataViewModel<Category> categoryView => categoryView.SelectedItem,
+                BaseDataViewModel<Customer> customerView => customerView.SelectedItem,
+                _ => null
+            };
+        }
 
         public ObservableCollection<BaseWorkspaceViewModel?> Workspaces
         {
@@ -45,6 +54,7 @@ namespace PDAB.ViewModels
                 _activeWorkspace = value;
                 OnPropertyChanged(nameof(ActiveWorkspace));
                 _refreshCommand?.RaiseCanExecuteChanged();
+                _deleteCommand?.RaiseCanExecuteChanged();
                 Console.WriteLine($"ActiveWorkspace changed to: {value?.GetType().Name}");
 
             }
@@ -117,29 +127,6 @@ namespace PDAB.ViewModels
                 Workspaces.Add(viewModel);
             }
         }
-        private async Task DeleteItem(object item)
-        {
-            if (MessageBox.Show($"Are you sure you want to delete this item?", 
-                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                try
-                {
-                    switch (ActiveWorkspace)
-                    {
-                        case BaseDataViewModel<Category> categoryView:
-                            await DeleteAndRefresh(categoryView, item as Category);
-                            break;
-                        case BaseDataViewModel<Customer> customerView:
-                            await DeleteAndRefresh(customerView, item as Customer);
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ShowMessageBox($"Error deleting item: {ex.Message}", MessageBoxImage.Error);
-                }
-            }
-        }
         private bool CanRefresh()
         {
             Console.WriteLine("CanRefresh called");
@@ -153,18 +140,15 @@ namespace PDAB.ViewModels
                 await refreshable.RefreshAsync();
             }
         }
-        
-        private async Task DeleteAndRefresh<T>(BaseDataViewModel<T> view, T item) where T : class
+
+        private async Task DeleteSelectedItem()
         {
-            if (item != null)
+            var item = GetSelectedItem();
+            if (ActiveWorkspace is IDeletable deletable && item != null)
             {
-                await view._repository.DeleteAsync(item);
-                await view._repository.SaveChangesAsync();
-                if (view is IRefreshable refreshable)
-                {
-                    await refreshable.RefreshAsync();
-                }
+                await deletable.DeleteItemAsync(item);
             }
         }
+ 
     }
 }
