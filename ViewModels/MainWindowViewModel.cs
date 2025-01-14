@@ -12,6 +12,34 @@ namespace PDAB.ViewModels
         private readonly IRepositoryFactory _repositoryFactory;
         private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
         private BaseWorkspaceViewModel _activeWorkspace;
+        private Type _currentEntityType;
+
+        public ICommand SaveCommand => new BaseCommand(
+            execute: async () => await SaveChanges(),
+            canExecute: () => ActiveWorkspace?.HasChanges ?? false
+        );
+        private bool CanAdd() => _currentEntityType != null;
+
+        private void AddNew()
+        {
+            switch (ActiveWorkspace)
+            {
+                case AllCategoriesViewModel:
+                    ShowAddForm<Category>("Add Category");
+                    break;
+                case AllCustomersViewModel:
+                    ShowAddForm<Customer>("Add Customer");
+                    break;
+            }
+        }
+        private async Task SaveChanges()
+        {
+            if (ActiveWorkspace is ISaveable saveable)
+            {
+                await saveable.SaveAsync();
+            }
+        }
+        
         public ObservableCollection<BaseWorkspaceViewModel> Workspaces
         {
             get => _workspaces;
@@ -44,7 +72,13 @@ namespace PDAB.ViewModels
             _repositoryFactory = repositoryFactory;
             Workspaces = new ObservableCollection<BaseWorkspaceViewModel>();
         }
-
+        private void ShowAddForm<T>(string displayName) where T : class, new()
+        {
+            var addViewModel = new AddEntityViewModel<T>(_repositoryFactory.GetRepository<T>(), displayName);
+            Workspaces.Clear();
+            Workspaces.Add(addViewModel);
+        }
+        
         private void ShowCategories()
         {
             Console.WriteLine("ShowCategories called");

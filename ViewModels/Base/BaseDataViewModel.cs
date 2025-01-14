@@ -4,6 +4,18 @@ public class BaseDataViewModel<T> : BaseWorkspaceViewModel where T : class
 {
     private readonly IRepository<T> _repository;
     private ObservableCollection<T> _items;
+    private bool _hasChanges;
+
+    
+    public override bool HasChanges 
+    { 
+        get => _hasChanges;
+        protected set
+        {
+            _hasChanges = value;
+            OnPropertyChanged(nameof(HasChanges));
+        }
+    }
 
     public ObservableCollection<T> Items
     {
@@ -25,5 +37,11 @@ public class BaseDataViewModel<T> : BaseWorkspaceViewModel where T : class
     private async void LoadData()
     {
         Items = await _repository.GetAllAsync();
+    }
+    
+    public override async Task SaveAsync()
+    {
+        await _repository.SaveChangesAsync();
+        HasChanges = false;
     }
 }

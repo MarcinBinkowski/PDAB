@@ -2,8 +2,10 @@ using System.Windows.Input;
 using PDAB.Helpers;
 using PDAB.ViewModels;
 
-public abstract class BaseWorkspaceViewModel : BaseViewModel
+public abstract class BaseWorkspaceViewModel : BaseViewModel, ISaveable
 {
+    public virtual bool HasChanges { get; protected set; }
+    public abstract Task SaveAsync();
     private BaseCommand _CloseCommand;
 
     public BaseWorkspaceViewModel()
