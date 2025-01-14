@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace PDAB.ViewModels
 {
-    public class BaseDataViewModel<T> : BaseWorkspaceViewModel, IRefreshable, IDeletable where T : class
+    public class BaseDataViewModel<T> : BaseWorkspaceViewModel, IRefreshable where T : class
     {
         private readonly IRepository<T> _repository;
         private ObservableCollection<T> _items;

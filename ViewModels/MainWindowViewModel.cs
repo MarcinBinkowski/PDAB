@@ -14,16 +14,11 @@ namespace PDAB.ViewModels
         private BaseWorkspaceViewModel _activeWorkspace;
         private BaseWorkspaceViewModel _previousWorkspace;
         private BaseCommand _refreshCommand;
-        private BaseCommand _deleteCommand;
 
         public ICommand AddCommand => new BaseCommand(AddNew);
         public ICommand RefreshCommand => _refreshCommand ??= new BaseCommand(
             execute: async () => await RefreshActiveWorkspace(),
             canExecute: () => CanRefresh()
-        );
-        public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand(
-            execute: async () => await DeleteSelectedItem(),
-            canExecute: () => GetSelectedItem() != null
         );
 
         private object? GetSelectedItem()
@@ -54,7 +49,6 @@ namespace PDAB.ViewModels
                 _activeWorkspace = value;
                 OnPropertyChanged(nameof(ActiveWorkspace));
                 _refreshCommand?.RaiseCanExecuteChanged();
-                _deleteCommand?.RaiseCanExecuteChanged();
                 Console.WriteLine($"ActiveWorkspace changed to: {value?.GetType().Name}");
 
             }
@@ -140,15 +134,5 @@ namespace PDAB.ViewModels
                 await refreshable.RefreshAsync();
             }
         }
-
-        private async Task DeleteSelectedItem()
-        {
-            var item = GetSelectedItem();
-            if (ActiveWorkspace is IDeletable deletable && item != null)
-            {
-                await deletable.DeleteItemAsync(item);
-            }
-        }
- 
     }
 }

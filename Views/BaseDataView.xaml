@@ -11,6 +11,7 @@
                   CanUserSortColumns="True"
                   CanUserAddRows="True"
                   CanUserDeleteRows="True"
+                  KeyDown="DataGrid_KeyDown"
                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                   materialDesign:DataGridAssist.ColumnHeaderPadding="8"/>
     </Grid>
