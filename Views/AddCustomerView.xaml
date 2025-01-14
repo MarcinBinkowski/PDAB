@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             >
-    <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
     <materialDesign:Card Margin="16" Padding="32">
         <StackPanel>
             <TextBlock Text="{Binding DisplayName}"
@@ -62,8 +60,4 @@
             </Button>
         </StackPanel>
     </materialDesign:Card>
-    </ScrollViewer>
-    </Grid>
-    
-
 </UserControl>
