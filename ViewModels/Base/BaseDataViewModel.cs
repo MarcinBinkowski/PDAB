@@ -1,8 +1,9 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PDAB.ViewModels
 {
-    public class BaseDataViewModel<T> : BaseWorkspaceViewModel where T : class
+    public class BaseDataViewModel<T> : BaseWorkspaceViewModel, IRefreshable where T : class
     {
         private readonly IRepository<T> _repository;
         private ObservableCollection<T> _items;
@@ -37,6 +38,7 @@ namespace PDAB.ViewModels
             }
         }
 
+
         public async Task RefreshAsync()
         {
             try
@@ -45,8 +47,9 @@ namespace PDAB.ViewModels
             }
             catch (Exception ex)
             {
-                ShowMessageBox($"Error refreshing data: {ex.Message}");
+                ShowMessageBox($"Error refreshing data: {ex.Message}", MessageBoxImage.Error);
             }
         }
+        
     }
 }

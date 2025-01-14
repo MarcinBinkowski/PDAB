@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Input;
 using PDAB.Helpers;
 
@@ -8,6 +9,13 @@ namespace PDAB.ViewModels
     {
         protected readonly IRepository<T> _repository;
         private T _entity;
+        private ICommand _saveCommand;
+        public ICommand SaveCommand => _saveCommand ??= new BaseCommand(async () => 
+        {
+            Console.WriteLine("Save Command Executed");
+            await SaveAsync();
+        });
+
 
         public T Entity
         {
@@ -28,11 +36,12 @@ namespace PDAB.ViewModels
 
         protected virtual async Task SaveAsync()
         {
+            Console.WriteLine("SaveAsync called");
             try
             {
                 await _repository.AddAsync(Entity);
                 await _repository.SaveChangesAsync();
-                ShowMessageBox($"{typeof(T).Name} added successfully");
+                ShowMessageBox($"{typeof(T).Name} added successfully", MessageBoxImage.Information);
                 OnRequestClose(); 
             }
             catch (Exception ex)

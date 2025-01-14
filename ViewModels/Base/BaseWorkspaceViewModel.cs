@@ -14,5 +14,4 @@ public abstract class BaseWorkspaceViewModel : BaseViewModel
     {
         RequestClose?.Invoke(this, EventArgs.Empty);
     }
-    
 }

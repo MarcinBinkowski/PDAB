@@ -14,11 +14,11 @@ namespace PDAB.ViewModels
         #endregion
         #region WindowPropertys
 
-        public void ShowMessageBox(string message)
+        public void ShowMessageBox(string message, MessageBoxImage icon = MessageBoxImage.Error)
         {
-            MessageBox.Show(message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, "", MessageBoxButton.OK, icon);
         }
-
+        
         public ICommand Close
         {
             get { return new BaseCommand(CloseApplication); }
