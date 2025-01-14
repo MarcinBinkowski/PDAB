@@ -1,5 +1,6 @@
-using System.Collections.ObjectModel;
+
 using PDAB.Models;
+using PDAB.ViewModels;
 
 public class AllDiscountProductsViewModel : BaseDataViewModel<DiscountProduct>
 {

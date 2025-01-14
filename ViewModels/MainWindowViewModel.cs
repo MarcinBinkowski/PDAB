@@ -12,34 +12,33 @@ namespace PDAB.ViewModels
         private readonly IRepositoryFactory _repositoryFactory;
         private ObservableCollection<BaseWorkspaceViewModel> _workspaces;
         private BaseWorkspaceViewModel _activeWorkspace;
-        private Type _currentEntityType;
 
-        public ICommand SaveCommand => new BaseCommand(
-            execute: async () => await SaveChanges(),
-            canExecute: () => ActiveWorkspace?.HasChanges ?? false
-        );
-        private bool CanAdd() => _currentEntityType != null;
+        public ICommand AddCommand => new BaseCommand(AddNew);
 
         private void AddNew()
         {
-            switch (ActiveWorkspace)
+            BaseWorkspaceViewModel viewModel = ActiveWorkspace switch
             {
-                case AllCategoriesViewModel:
-                    ShowAddForm<Category>("Add Category");
-                    break;
-                case AllCustomersViewModel:
-                    ShowAddForm<Customer>("Add Customer");
-                    break;
+                BaseDataViewModel<Category> => new AddCategoryViewModel(_repositoryFactory.GetRepository<Category>()),
+                BaseDataViewModel<Customer> => new AddCustomerViewModel(_repositoryFactory.GetRepository<Customer>()),
+                _ => null
+            };
+
+            if (viewModel != null)
+            {
+                viewModel.RequestClose += async (s, e) => 
+                {
+                    Workspaces.Remove(viewModel);
+                    if (ActiveWorkspace is BaseDataViewModel dataView)
+                    {
+                        await dataView.RefreshAsync();
+                    }
+                };
+                Workspaces.Clear();
+                Workspaces.Add(viewModel);
             }
         }
-        private async Task SaveChanges()
-        {
-            if (ActiveWorkspace is ISaveable saveable)
-            {
-                await saveable.SaveAsync();
-            }
-        }
-        
+
         public ObservableCollection<BaseWorkspaceViewModel> Workspaces
         {
             get => _workspaces;
@@ -72,13 +71,6 @@ namespace PDAB.ViewModels
             _repositoryFactory = repositoryFactory;
             Workspaces = new ObservableCollection<BaseWorkspaceViewModel>();
         }
-        private void ShowAddForm<T>(string displayName) where T : class, new()
-        {
-            var addViewModel = new AddEntityViewModel<T>(_repositoryFactory.GetRepository<T>(), displayName);
-            Workspaces.Clear();
-            Workspaces.Add(addViewModel);
-        }
-        
         private void ShowCategories()
         {
             Console.WriteLine("ShowCategories called");

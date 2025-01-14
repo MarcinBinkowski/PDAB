@@ -1,47 +1,52 @@
 using System.Collections.ObjectModel;
 
-public class BaseDataViewModel<T> : BaseWorkspaceViewModel where T : class
+namespace PDAB.ViewModels
 {
-    private readonly IRepository<T> _repository;
-    private ObservableCollection<T> _items;
-    private bool _hasChanges;
+    public class BaseDataViewModel<T> : BaseWorkspaceViewModel where T : class
+    {
+        private readonly IRepository<T> _repository;
+        private ObservableCollection<T> _items;
 
-    
-    public override bool HasChanges 
-    { 
-        get => _hasChanges;
-        protected set
+
+        public ObservableCollection<T> Items
         {
-            _hasChanges = value;
-            OnPropertyChanged(nameof(HasChanges));
+            get => _items;
+            set
+            {
+                _items = value;
+                OnPropertyChanged(nameof(Items));
+            }
         }
-    }
 
-    public ObservableCollection<T> Items
-    {
-        get => _items;
-        set
+        public BaseDataViewModel(IRepository<T> repository, string displayName)
         {
-            _items = value;
-            OnPropertyChanged(nameof(Items));
+            DisplayName = displayName;
+            _repository = repository;
+            LoadData();
         }
-    }
 
-    public BaseDataViewModel(IRepository<T> repository, string displayName)
-    {
-        DisplayName = displayName;
-        _repository = repository;
-        LoadData();
-    }
+        private async void LoadData()
+        {
+            try
+            {
+                Items = await _repository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                ShowMessageBox($"Error loading data: {ex.Message}");
+            }
+        }
 
-    private async void LoadData()
-    {
-        Items = await _repository.GetAllAsync();
-    }
-    
-    public override async Task SaveAsync()
-    {
-        await _repository.SaveChangesAsync();
-        HasChanges = false;
+        public async Task RefreshAsync()
+        {
+            try
+            {
+                Items = await _repository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                ShowMessageBox($"Error refreshing data: {ex.Message}");
+            }
+        }
     }
 }
