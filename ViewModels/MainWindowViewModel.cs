@@ -14,6 +14,8 @@ namespace PDAB.ViewModels
         private BaseWorkspaceViewModel _activeWorkspace;
         private BaseWorkspaceViewModel _previousWorkspace;
         private BaseCommand _refreshCommand;
+        private BaseCommand _deleteCommand;
+
 
         public ICommand AddCommand => new BaseCommand(AddNew);
         public ICommand RefreshCommand => _refreshCommand ??= new BaseCommand(
@@ -21,16 +23,21 @@ namespace PDAB.ViewModels
             canExecute: () => CanRefresh()
         );
 
-        private object? GetSelectedItem()
-        {
-            Console.WriteLine("GetSelectedItem called");
-            return ActiveWorkspace switch
+        public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand(
+            execute: async () => 
             {
-                BaseDataViewModel<Category> categoryView => categoryView.SelectedItem,
-                BaseDataViewModel<Customer> customerView => customerView.SelectedItem,
-                _ => null
-            };
-        }
+                if (ActiveWorkspace is BaseDataViewModel<Category> categoryView)
+                {
+                    await categoryView.DeleteSelectedItem();
+                }
+                else if (ActiveWorkspace is BaseDataViewModel<Customer> customerView)
+                {
+                    await customerView.DeleteSelectedItem();
+                }
+            }
+           
+        );
+
 
         public ObservableCollection<BaseWorkspaceViewModel?> Workspaces
         {

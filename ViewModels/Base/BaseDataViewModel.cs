@@ -31,10 +31,7 @@ namespace PDAB.ViewModels
                 Console.WriteLine($"Selected item changed to: {value?.GetType().Name} - {value}");
             }
         }
-        public ICommand DeleteCommand => new BaseCommand(
-            execute: async () => await DeleteSelectedItem(),
-            canExecute: () => SelectedItem != null
-        );
+        
         public BaseDataViewModel(IRepository<T> repository, string displayName)
         {
             DisplayName = displayName;
@@ -69,9 +66,8 @@ namespace PDAB.ViewModels
           
         public async Task DeleteSelectedItem()
         {
-            Console.WriteLine($"Attempting to delete item: {SelectedItem}");
-
             if (SelectedItem == null) return;
+            Console.WriteLine("Deleting selected item: " + SelectedItem);
 
             if (MessageBox.Show($"Are you sure you want to delete this {typeof(T).Name}?", 
                     "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -85,6 +81,10 @@ namespace PDAB.ViewModels
                 catch (Exception ex)
                 {
                     ShowMessageBox($"Error deleting {typeof(T).Name}: {ex.Message}", MessageBoxImage.Error);
+                    if (ex.InnerException != null)
+                    {
+                        ShowMessageBox($"Inner exception: {ex.InnerException.Message}", MessageBoxImage.Error);
+                    }
                 }
             }
         }

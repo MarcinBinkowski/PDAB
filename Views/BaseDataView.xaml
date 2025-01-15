@@ -10,17 +10,10 @@
                   SelectionUnit="FullRow"
                   IsSynchronizedWithCurrentItem="True"
                   AutoGenerateColumns="True"
-                  IsReadOnly="False"
+                  IsReadOnly="True"
                   CanUserSortColumns="True"
-                  CanUserAddRows="True"
-                  CanUserDeleteRows="True"
                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                   materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-            <DataGrid.InputBindings>
-                <KeyBinding Key="Delete" 
-                            Command="{Binding DataContext.DeleteCommand, 
-                             RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-            </DataGrid.InputBindings>
         </DataGrid>
     </Grid>
 </UserControl>
