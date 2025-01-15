@@ -9,6 +9,8 @@ namespace PDAB.ViewModels
     {
         private readonly IRepository<T> _repository;
         private ObservableCollection<T> _items;
+        public event EventHandler SelectionChanged;
+
         public ObservableCollection<T> Items
         {
             get => _items;
@@ -29,6 +31,7 @@ namespace PDAB.ViewModels
                 _selectedItem = value;
                 OnPropertyChanged(nameof(SelectedItem));
                 Console.WriteLine($"Selected item changed to: {value?.GetType().Name} - {value}");
+                CommandManager.InvalidateRequerySuggested();
             }
         }
         

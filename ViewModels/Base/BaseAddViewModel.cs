@@ -47,6 +47,10 @@ namespace PDAB.ViewModels
             catch (Exception ex)
             {
                 ShowMessageBox($"Error saving {typeof(T).Name}: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    ShowMessageBox($"Inner Exception: {ex.InnerException.Message}");
+                }
             }
         }
     }

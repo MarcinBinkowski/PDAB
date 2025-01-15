@@ -26,14 +26,27 @@ namespace PDAB.ViewModels
         public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand(
             execute: async () => 
             {
-                if (ActiveWorkspace is BaseDataViewModel<Category> categoryView)
+                if (ActiveWorkspace?.GetType().BaseType?.GetGenericTypeDefinition() != typeof(BaseDataViewModel<>))
+                    return;
+
+                try
                 {
-                    await categoryView.DeleteSelectedItem();
+                    var deleteMethod = ActiveWorkspace.GetType().GetMethod("DeleteSelectedItem");
+                    if (deleteMethod != null)
+                    {
+                        await (Task)deleteMethod.Invoke(ActiveWorkspace, null);
+                    }
                 }
-                else if (ActiveWorkspace is BaseDataViewModel<Customer> customerView)
+                catch (Exception ex)
                 {
-                    await customerView.DeleteSelectedItem();
+                    ShowMessageBox($"Error during delete: {ex.Message}", MessageBoxImage.Error);
                 }
+            },
+            canExecute: () => 
+            {
+                var isDataView = ActiveWorkspace?.GetType().BaseType?.GetGenericTypeDefinition() == typeof(BaseDataViewModel<>);
+                Console.WriteLine($"CanDelete called, result: {isDataView}, ActiveWorkspace: {ActiveWorkspace?.GetType().Name}, BaseType: {ActiveWorkspace?.GetType().BaseType?.Name}");
+                return isDataView;
             }
            
         );
@@ -56,6 +69,7 @@ namespace PDAB.ViewModels
                 _activeWorkspace = value;
                 OnPropertyChanged(nameof(ActiveWorkspace));
                 _refreshCommand?.RaiseCanExecuteChanged();
+                _deleteCommand?.RaiseCanExecuteChanged();
                 Console.WriteLine($"ActiveWorkspace changed to: {value?.GetType().Name}");
 
             }
@@ -89,6 +103,10 @@ namespace PDAB.ViewModels
         }
         private void AddWorkspace(BaseWorkspaceViewModel workspace)
         {
+            if (workspace is BaseDataViewModel<dynamic> dataView)
+            {
+                dataView.SelectionChanged += (s, e) => _deleteCommand?.RaiseCanExecuteChanged();
+            }
             Workspaces.Clear(); 
             Workspaces.Add(workspace);
             ActiveWorkspace = workspace;
