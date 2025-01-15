@@ -26,20 +26,21 @@ namespace PDAB.ViewModels
         public ICommand DeleteCommand => _deleteCommand ??= new BaseCommand(
             execute: async () => 
             {
-                if (ActiveWorkspace?.GetType().BaseType?.GetGenericTypeDefinition() != typeof(BaseDataViewModel<>))
-                    return;
-
                 try
                 {
-                    var deleteMethod = ActiveWorkspace.GetType().GetMethod("DeleteSelectedItem");
-                    if (deleteMethod != null)
+                    if (ActiveWorkspace?.GetType().BaseType?.GetGenericTypeDefinition() == typeof(BaseDataViewModel<>))
                     {
-                        await (Task)deleteMethod.Invoke(ActiveWorkspace, null);
+                        var deleteMethod = ActiveWorkspace.GetType().GetMethod("DeleteSelectedItem");
+                        if (deleteMethod != null)
+                        {
+                            await (Task)deleteMethod.Invoke(ActiveWorkspace, null);
+                        }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    ShowMessageBox($"Error during delete: {ex.Message}", MessageBoxImage.Error);
+                    _deleteCommand.RaiseCanExecuteChanged();
+                    throw;
                 }
             },
             canExecute: () => 
@@ -79,6 +80,20 @@ namespace PDAB.ViewModels
         # region commands
         public ICommand ShowCategoriesCommand => new BaseCommand(() => ShowCategories());
         public ICommand ShowCustomersCommand => new BaseCommand(() => ShowCustomers());
+        public ICommand ShowDiscountProductsCommand => new BaseCommand(() => ShowDiscountProducts());
+        public ICommand ShowDiscountsCommand => new BaseCommand(() => ShowDiscounts());
+        public ICommand ShowEmployeesCommand => new BaseCommand(() => ShowEmployees());
+        public ICommand ShowManufacturersCommand => new BaseCommand(() => ShowManufacturers());
+        public ICommand ShowOrderDetailsCommand => new BaseCommand(() => ShowOrderDetails());
+        public ICommand ShowOrderPaymentsCommand => new BaseCommand(() => ShowOrderPayments());
+        public ICommand ShowOrderStatusesCommand => new BaseCommand(() => ShowOrderStatuses());
+        public ICommand ShowOrdersCommand => new BaseCommand(() => ShowOrders());
+        public ICommand ShowPaymentMethodsCommand => new BaseCommand(() => ShowPaymentMethods());
+        public ICommand ShowProductImagesCommand => new BaseCommand(() => ShowProductImages());
+        public ICommand ShowProductsCommand => new BaseCommand(() => ShowProducts());
+        public ICommand ShowReviewsCommand => new BaseCommand(() => ShowReviews());
+        public ICommand ShowRolesCommand => new BaseCommand(() => ShowRoles());
+        public ICommand ShowUsersCommand => new BaseCommand(() => ShowUsers());
 
         # endregion
         
@@ -101,6 +116,47 @@ namespace PDAB.ViewModels
             var viewModel = new AllCustomersViewModel(_repositoryFactory.GetRepository<Customer>());
             AddWorkspace(viewModel);
         }
+        private void ShowDiscountProducts() => 
+            AddWorkspace(new AllDiscountProductsViewModel(_repositoryFactory.GetRepository<DiscountProduct>()));
+
+        private void ShowDiscounts() => 
+            AddWorkspace(new AllDiscountsViewModel(_repositoryFactory.GetRepository<Discount>()));
+
+        private void ShowEmployees() => 
+            AddWorkspace(new AllEmployeesViewModel(_repositoryFactory.GetRepository<Employee>()));
+
+        private void ShowManufacturers() => 
+            AddWorkspace(new AllManufacturersViewModel(_repositoryFactory.GetRepository<Manufacturer>()));
+
+        private void ShowOrderDetails() => 
+            AddWorkspace(new AllOrderDetailsViewModel(_repositoryFactory.GetRepository<OrderDetail>()));
+
+        private void ShowOrderPayments() => 
+            AddWorkspace(new AllOrderPaymentsViewModel(_repositoryFactory.GetRepository<OrderPayment>()));
+
+        private void ShowOrderStatuses() => 
+            AddWorkspace(new AllOrderStatusesViewModel(_repositoryFactory.GetRepository<OrderStatus>()));
+
+        private void ShowOrders() => 
+            AddWorkspace(new AllOrdersViewModel(_repositoryFactory.GetRepository<Order>()));
+
+        private void ShowPaymentMethods() => 
+            AddWorkspace(new AllPaymentMethodsViewModel(_repositoryFactory.GetRepository<PaymentMethod>()));
+
+        private void ShowProductImages() => 
+            AddWorkspace(new AllProductImagesViewModel(_repositoryFactory.GetRepository<ProductImage>()));
+
+        private void ShowProducts() => 
+            AddWorkspace(new AllProductsViewModel(_repositoryFactory.GetRepository<Product>()));
+
+        private void ShowReviews() => 
+            AddWorkspace(new AllReviewsViewModel(_repositoryFactory.GetRepository<Review>()));
+        private void ShowRoles() => 
+            AddWorkspace(new AllRolesViewModel(_repositoryFactory.GetRepository<Role>()));
+
+        private void ShowUsers() => 
+            AddWorkspace(new AllUsersViewModel(_repositoryFactory.GetRepository<User>()));
+        
         private void AddWorkspace(BaseWorkspaceViewModel workspace)
         {
             if (workspace is BaseDataViewModel<dynamic> dataView)

@@ -2,10 +2,13 @@
 using PDAB.Models;
 using PDAB.ViewModels;
 
-public class AllManufacturersViewModel : BaseDataViewModel<Manufacturer>
+namespace PDAB.ViewModels
 {
-    public AllManufacturersViewModel(IRepository<Manufacturer> repository) 
-        : base(repository, "Manufacturers")
+    public class AllManufacturersViewModel : BaseDataViewModel<Manufacturer>
     {
+        public AllManufacturersViewModel(IRepository<Manufacturer> repository)
+            : base(repository, "Manufacturers")
+        {
+        }
     }
 }

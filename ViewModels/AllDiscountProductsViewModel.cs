@@ -1,11 +1,13 @@
 
 using PDAB.Models;
-using PDAB.ViewModels;
 
-public class AllDiscountProductsViewModel : BaseDataViewModel<DiscountProduct>
+namespace PDAB.ViewModels
 {
-    public AllDiscountProductsViewModel(IRepository<DiscountProduct> repository) 
-        : base(repository, "Discount Products")
+    public class AllDiscountProductsViewModel : BaseDataViewModel<DiscountProduct>
     {
+        public AllDiscountProductsViewModel(IRepository<DiscountProduct> repository) 
+            : base(repository, "Discount Products")
+        {
+        }
     }
 }

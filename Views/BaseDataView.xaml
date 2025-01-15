@@ -13,7 +13,8 @@
                   IsReadOnly="True"
                   CanUserSortColumns="True"
                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                  AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
         </DataGrid>
     </Grid>
 </UserControl>

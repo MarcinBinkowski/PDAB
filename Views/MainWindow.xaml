@@ -20,6 +20,48 @@
         <DataTemplate DataType="{x:Type vm:AllCustomersViewModel}">
             <views:BaseDataView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllDiscountProductsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllDiscountsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllEmployeesViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllManufacturersViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderDetailsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderPaymentsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrderStatusesViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllOrdersViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllPaymentMethodsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllProductImagesViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllProductsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllReviewsViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllRolesViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AllUsersViewModel}">
+            <views:BaseDataView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AddCategoryViewModel}">
             <views:AddCategoryView/>
         </DataTemplate>
@@ -61,6 +103,188 @@
                             <materialDesign:PackIcon Kind="AccountGroup" 
                                                      Style="{StaticResource NavigationIcon}"/>
                             <TextBlock Text="Customers" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowDiscountProductsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="DiscountProducts" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowDiscountsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Discounts" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowEmployeesCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Employees" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>                    
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowManufacturersCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Manufacturers" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button> 
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowOrderDetailsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="OrderDetails" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowOrderPaymentsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="OrderPayments" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowOrderStatusesCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="OrderStatuses" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowOrdersCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Orders" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowPaymentMethodsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="PaymentMethods" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowProductImagesCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="ProductImages" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowProductsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Products" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowReviewsCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Reviews" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowRolesCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Roles" 
+                                       Style="{StaticResource NavigationText}"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource NavigationButton}"
+                            Command="{Binding ShowUsersCommand}">
+                        <Grid Width="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Kind="AccountGroup" 
+                                                     Style="{StaticResource NavigationIcon}"/>
+                            <TextBlock Text="Users" 
                                        Style="{StaticResource NavigationText}"/>
                         </Grid>
                     </Button>
