@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
+using PDAB.Helpers;
 
 namespace PDAB.ViewModels
 {
@@ -14,6 +16,7 @@ namespace PDAB.ViewModels
             {
                 _items = value;
                 OnPropertyChanged(nameof(Items));
+                Console.WriteLine($"Selected collection changed to: {value}");
             }
         }
         
@@ -25,8 +28,13 @@ namespace PDAB.ViewModels
             {
                 _selectedItem = value;
                 OnPropertyChanged(nameof(SelectedItem));
+                Console.WriteLine($"Selected item changed to: {value?.GetType().Name} - {value}");
             }
         }
+        public ICommand DeleteCommand => new BaseCommand(
+            execute: async () => await DeleteSelectedItem(),
+            canExecute: () => SelectedItem != null
+        );
         public BaseDataViewModel(IRepository<T> repository, string displayName)
         {
             DisplayName = displayName;
@@ -58,23 +66,25 @@ namespace PDAB.ViewModels
                 ShowMessageBox($"Error refreshing data: {ex.Message}", MessageBoxImage.Error);
             }
         }
-        public async Task DeleteItemAsync(object item)
+          
+        public async Task DeleteSelectedItem()
         {
-            if (item is T entityItem)
+            Console.WriteLine($"Attempting to delete item: {SelectedItem}");
+
+            if (SelectedItem == null) return;
+
+            if (MessageBox.Show($"Are you sure you want to delete this {typeof(T).Name}?", 
+                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if (MessageBox.Show($"Are you sure you want to delete this {typeof(T).Name}?", 
-                        "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                try
                 {
-                    try
-                    {
-                        await _repository.DeleteAsync(entityItem);
-                        await _repository.SaveChangesAsync();
-                        await RefreshAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowMessageBox($"Error deleting {typeof(T).Name}: {ex.Message}", MessageBoxImage.Error);
-                    }
+                    await _repository.DeleteAsync(SelectedItem);
+                    await _repository.SaveChangesAsync();
+                    await RefreshAsync();
+                }
+                catch (Exception ex)
+                {
+                    ShowMessageBox($"Error deleting {typeof(T).Name}: {ex.Message}", MessageBoxImage.Error);
                 }
             }
         }

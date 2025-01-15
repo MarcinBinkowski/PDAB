@@ -12,12 +12,12 @@ namespace PDAB.Views
         }
         private async void DataGrid_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.Key == Key.Delete && DataContext is BaseWorkspaceViewModel viewModel)
             {
-                var dataGrid = sender as DataGrid;
-                if (dataGrid?.SelectedItem != null && DataContext is IDeletable deletable)
+                var method = viewModel.GetType().GetMethod("DeleteSelectedItem");
+                if (method != null)
                 {
-                    await deletable.DeleteItemAsync(dataGrid.SelectedItem);
+                    await (Task)method.Invoke(viewModel, null);
                 }
             }
         }

@@ -6,13 +6,21 @@
     <Grid Margin="8">
         <DataGrid ItemsSource="{Binding Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  IsSynchronizedWithCurrentItem="True"
                   AutoGenerateColumns="True"
                   IsReadOnly="False"
                   CanUserSortColumns="True"
                   CanUserAddRows="True"
                   CanUserDeleteRows="True"
-                  KeyDown="DataGrid_KeyDown"
                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                  materialDesign:DataGridAssist.ColumnHeaderPadding="8"/>
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" 
+                            Command="{Binding DataContext.DeleteCommand, 
+                             RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+            </DataGrid.InputBindings>
+        </DataGrid>
     </Grid>
 </UserControl>
