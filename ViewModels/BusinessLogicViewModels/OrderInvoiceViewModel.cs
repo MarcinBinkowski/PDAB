@@ -18,7 +18,7 @@ namespace PDAB.ViewModels
     {
         private readonly IRepositoryFactory _repositoryFactory;
         private readonly InvoiceService _invoiceService;
-        private readonly IEmailService _emailService;
+        private readonly EmailService _emailService;
         private ObservableCollection<Customer> _customers;
         private Customer _selectedCustomer;
         private ObservableCollection<Order> _customerOrders;
@@ -30,7 +30,7 @@ namespace PDAB.ViewModels
 
         public OrderInvoiceViewModel(IRepositoryFactory repositoryFactory, 
             InvoiceService invoiceService, 
-            IEmailService emailService)
+            EmailService emailService)
         {
             DisplayName = "Order Invoices";
             _repositoryFactory = repositoryFactory;

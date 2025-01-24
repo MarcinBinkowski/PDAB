@@ -28,9 +28,9 @@ namespace PDAB
             # endregion
             
             # region services
-            services.AddScoped<IDialogService, DialogService>();
+            services.AddScoped<DialogService, DialogService>();
             services.AddSingleton<PasswordService, PasswordService>();
-            services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<EmailService, EmailService>();
             services.AddSingleton<InvoiceService, InvoiceService>();
             #endregion
             

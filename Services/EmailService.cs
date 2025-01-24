@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace PDAB.Services
 {
-    public class EmailService : IEmailService
+    public class EmailService
     {
         private readonly SmtpClient _smtpClient;
 
@@ -26,11 +26,11 @@ namespace PDAB.Services
                 From = new MailAddress("PDAB@test.com"),
                 Subject = $"Order Confirmation",
                 Body = $@"Dear Customer,
-                        Thank you for your order.
-                        Total amount: {totalAmount:C}
-                        Please check your order status in your account and pay the amount.
-                        Best regards,
-                        PDAB Sports Store"
+Thank you for your order.
+Total amount: {totalAmount:C}
+Please check your order status in your account and pay the amount.
+Best regards,
+PDAB Sports Store"
             };
             message.To.Add(customerEmail);
 

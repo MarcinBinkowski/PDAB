@@ -11,9 +11,9 @@ namespace PDAB.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IDialogService _dialogService;
+        private readonly DialogService _dialogService;
         private readonly PasswordService _passwordService;
-        private readonly IEmailService _emailService;
+        private readonly EmailService _emailService;
         private readonly InvoiceService _invoiceService;
         private ObservableCollection<BaseWorkspaceViewModel?> _workspaces;
         private BaseWorkspaceViewModel _activeWorkspace;
@@ -108,7 +108,7 @@ namespace PDAB.ViewModels
         
         public MainWindowViewModel(
             IRepositoryFactory repositoryFactory,
-            IDialogService dialogService, PasswordService passwordService, IEmailService emailService,InvoiceService invoiceService)
+            DialogService dialogService, PasswordService passwordService, EmailService emailService,InvoiceService invoiceService)
         {
             DisplayName = "PDAB Marcin Binkowski";
             _repositoryFactory = repositoryFactory;

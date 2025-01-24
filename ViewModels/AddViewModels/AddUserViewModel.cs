@@ -10,7 +10,7 @@ namespace PDAB.ViewModels
     public class AddUserViewModel : BaseAddViewModel<User>
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IDialogService _dialogService;
+        private readonly DialogService _dialogService;
         private readonly PasswordService _passwordService;
 
         private ObservableCollection<Employee> _employees;
@@ -55,7 +55,7 @@ namespace PDAB.ViewModels
 
         public AddUserViewModel(
             IRepositoryFactory repositoryFactory,
-            IDialogService dialogService,
+            DialogService dialogService,
             PasswordService passwordService) 
             : base(repositoryFactory.GetRepository<User>(), "Add User")
         {

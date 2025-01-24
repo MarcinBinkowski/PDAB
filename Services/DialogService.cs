@@ -3,7 +3,7 @@ using MaterialDesignThemes.Wpf;
 using PDAB.ViewModels;
 using PDAB.Views;
 
-public class DialogService : IDialogService
+public class DialogService
 {
     public async Task<T?> ShowSelectionDialog<T>(string title, IEnumerable<T> items) where T : class
     {

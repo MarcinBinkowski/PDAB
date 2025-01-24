@@ -9,7 +9,7 @@ namespace PDAB.ViewModels
 public class AddOrderPaymentViewModel : BaseAddViewModel<OrderPayment>
 {
     private readonly IRepositoryFactory _repositoryFactory;
-    private readonly IDialogService _dialogService;
+    private readonly DialogService _dialogService;
     private ObservableCollection<Order> _orders;
     private ObservableCollection<PaymentMethod> _paymentMethods;
 
@@ -33,7 +33,7 @@ public class AddOrderPaymentViewModel : BaseAddViewModel<OrderPayment>
         }
     }
 
-    public AddOrderPaymentViewModel(IRepositoryFactory repositoryFactory, IDialogService dialogService) 
+    public AddOrderPaymentViewModel(IRepositoryFactory repositoryFactory, DialogService dialogService) 
         : base(repositoryFactory.GetRepository<OrderPayment>(), "Add Order Payment")
     {
         _repositoryFactory = repositoryFactory;

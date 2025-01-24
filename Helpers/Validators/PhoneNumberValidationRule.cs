@@ -10,7 +10,7 @@ namespace PDAB.Helpers
         {
             string phoneNumber = value?.ToString();
             if (string.IsNullOrEmpty(phoneNumber))
-                return new ValidationResult(false, "Phone number is required");
+                return ValidationResult.ValidResult;
 
             if (!phoneNumber.All(char.IsDigit))
                 return new ValidationResult(false, "Phone number can only contain digits");

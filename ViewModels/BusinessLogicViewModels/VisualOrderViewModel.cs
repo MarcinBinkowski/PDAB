@@ -14,7 +14,7 @@ namespace PDAB.ViewModels
     public class VisualOrderViewModel : BaseWorkspaceViewModel
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IEmailService _emailService;
+        private readonly EmailService _emailService;
 
         private ObservableCollection<Product> _products;
         private ObservableCollection<Customer> _customers;
@@ -26,13 +26,12 @@ namespace PDAB.ViewModels
 
         private BaseCommand _createOrderCommand;
 
-        public VisualOrderViewModel(IRepositoryFactory repositoryFactory, IEmailService emailService)
+        public VisualOrderViewModel(IRepositoryFactory repositoryFactory, EmailService emailService)
         {
             DisplayName = "Visual Order Creator";
             _repositoryFactory = repositoryFactory;
             _emailService = emailService;
 
-            // Initialize collections
             _products = new ObservableCollection<Product>();
             _customers = new ObservableCollection<Customer>();
             _orderDetails = new ObservableCollection<OrderDetail>();

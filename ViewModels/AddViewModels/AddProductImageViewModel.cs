@@ -9,7 +9,7 @@ namespace PDAB.ViewModels
     public class AddProductImageViewModel : BaseAddViewModel<ProductImage>
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IDialogService _dialogService;
+        private readonly DialogService _dialogService;
         private ObservableCollection<Product> _products;
 
         public ObservableCollection<Product> Products
@@ -22,7 +22,7 @@ namespace PDAB.ViewModels
             }
         }
 
-        public AddProductImageViewModel(IRepositoryFactory repositoryFactory, IDialogService dialogService) 
+        public AddProductImageViewModel(IRepositoryFactory repositoryFactory, DialogService dialogService) 
             : base(repositoryFactory.GetRepository<ProductImage>(), "Add Product Image")
         {
             _repositoryFactory = repositoryFactory;

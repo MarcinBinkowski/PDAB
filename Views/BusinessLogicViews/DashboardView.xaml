@@ -13,11 +13,9 @@
 
     <Grid Margin="16">
         <TabControl>
-            <!-- Top Products tab -->
             <TabItem Header="Top Products">
                 <ScrollViewer Margin="16">
                     <StackPanel>
-                        <!-- Date pickers row -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                             <StackPanel Margin="0,0,16,0">
                                 <TextBlock Text="Start Date" 
@@ -74,10 +72,8 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- Sales tab -->
             <TabItem Header="Sales">
                     <StackPanel>
-                        <!-- Date pickers row + group option -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                             <StackPanel Margin="0,0,16,0">
                                 <TextBlock Text="Start Date" 
@@ -117,7 +113,6 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Basic stats -->
                         <WrapPanel>
                             <materialDesign:Card Width="280" Margin="8">
                                 <StackPanel Margin="16">
@@ -140,13 +135,11 @@
                             </materialDesign:Card>
                         </WrapPanel>
 
-                        <!-- Charts -->
                         <TextBlock Text="Grouped Sales" 
                                  Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                  Margin="0,16,0,8"/>
 
                         <Grid>
-                            <!-- Bar Chart View -->
                             <ItemsControl ItemsSource="{Binding DashboardSummary.MonthlySales}">
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">
@@ -174,7 +167,6 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <!-- Column Chart View -->
                             <ItemsControl ItemsSource="{Binding DashboardSummary.MonthlySales}">
                                 <ItemsControl.Style>
                                     <Style TargetType="ItemsControl">

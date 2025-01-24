@@ -11,7 +11,6 @@
                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                       Margin="0,0,0,32"/>
 
-            <!-- First Name -->
             <TextBlock Text="First Name"
                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             <TextBox Text="{Binding Entity.FirstName, UpdateSourceTrigger=PropertyChanged}"
@@ -19,7 +18,6 @@
                     materialDesign:HintAssist.Hint="Enter first name"
                     Margin="0,8,0,16"/>
 
-            <!-- Last Name -->
             <TextBlock Text="Last Name"
                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             <TextBox Text="{Binding Entity.LastName, UpdateSourceTrigger=PropertyChanged}"
@@ -27,7 +25,6 @@
                     materialDesign:HintAssist.Hint="Enter last name"
                     Margin="0,8,0,16"/>
 
-            <!-- Position -->
             <TextBlock Text="Position"
                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             <TextBox Text="{Binding Entity.Position, UpdateSourceTrigger=PropertyChanged}"
@@ -35,7 +32,6 @@
                     materialDesign:HintAssist.Hint="Enter position"
                     Margin="0,8,0,16"/>
 
-            <!-- Email -->
             <TextBlock Text="Email"
                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             <TextBox Text="{Binding Entity.Email, UpdateSourceTrigger=PropertyChanged}"
@@ -43,7 +39,6 @@
                     materialDesign:HintAssist.Hint="Enter email address"
                     Margin="0,8,0,16"/>
 
-            <!-- Phone -->
             <TextBlock Text="Phone"
                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             <TextBox Text="{Binding Entity.Phone, UpdateSourceTrigger=PropertyChanged}"
@@ -51,7 +46,6 @@
                     materialDesign:HintAssist.Hint="Enter phone number"
                     Margin="0,8,0,32"/>
 
-            <!-- Save Button -->
             <Button Command="{Binding SaveCommand}"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     HorizontalAlignment="Right">

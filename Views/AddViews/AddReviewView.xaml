@@ -1,0 +1,131 @@
+<UserControl x:Class="PDAB.Views.AddReviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:PDAB.Converters"
+             xmlns:helpers="clr-namespace:PDAB.Helpers"
+             >
+    <UserControl.Resources>
+        <converters:AllValidationPassedConverter x:Key="AllValidationPassedConverter"/>
+    </UserControl.Resources>
+    <materialDesign:Card Margin="16" Padding="32">
+        <StackPanel>
+            <TextBlock Text="{Binding DisplayName}"
+                      Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                      Margin="0,0,0,32"/>
+
+            <TextBlock Text="Customer"
+                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectCustomerIdCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <TextBox x:Name="CustomerBox"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         materialDesign:HintAssist.Hint="Customer"
+                         IsReadOnly="True">
+                    <TextBox.Text>
+                        <Binding Path="Entity.CustomerId"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True"
+                                 ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </DockPanel>
+
+            <TextBlock Text="Product"
+                      Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <DockPanel Margin="0,8,0,16">
+                <Button DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        Command="{Binding SelectProductCommand}"
+                        Margin="8,0,0,0">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+                <ComboBox x:Name="ProductBox"
+                          ItemsSource="{Binding Products}"
+                          DisplayMemberPath="ProductName"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Validation.ErrorTemplate="{x:Null}"
+                          materialDesign:HintAssist.Hint="Select product">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="Entity.Product"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True"
+                                 ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                </ComboBox>
+            </DockPanel>
+
+            <TextBox x:Name="RatingBox"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Validation.ErrorTemplate="{x:Null}"
+                     materialDesign:HintAssist.Hint="Enter rating (1-5)"
+                     Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.Rating" 
+                             UpdateSourceTrigger="PropertyChanged"
+                             NotifyOnValidationError="True"
+                             ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <helpers:RatingValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="CommentBox"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Validation.ErrorTemplate="{x:Null}"
+                     materialDesign:HintAssist.Hint="Enter comment (optional)"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Height="100"
+                     Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.Comment"
+                             UpdateSourceTrigger="PropertyChanged"
+                             NotifyOnValidationError="True"
+                             ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:CommentLengthValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Button Command="{Binding SaveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Right">
+                <Button.IsEnabled>
+                    <MultiBinding>
+                        <MultiBinding.Converter>
+                            <converters:AllValidationPassedConverter/>
+                        </MultiBinding.Converter>
+                        <Binding Path="(Validation.HasError)" ElementName="CustomerBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="ProductBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="CommentBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="RatingBox"/>
+                        <Binding Path="Entity.CustomerId"/>
+                        <Binding Path="Entity.Product"/>
+                    </MultiBinding>
+                </Button.IsEnabled>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSave" Margin="0,0,8,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </materialDesign:Card>
+</UserControl>

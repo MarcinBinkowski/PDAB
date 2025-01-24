@@ -10,7 +10,7 @@ namespace PDAB.ViewModels
 public class AddOrderViewModel : BaseAddViewModel<Order>
 {
     private readonly IRepositoryFactory _repositoryFactory;
-    private readonly IDialogService _dialogService;
+    private readonly DialogService _dialogService;
     private ObservableCollection<Customer> _customers;
     private ObservableCollection<OrderStatus> _orderStatuses;
 
@@ -34,7 +34,7 @@ public class AddOrderViewModel : BaseAddViewModel<Order>
         }
     }
 
-    public AddOrderViewModel(IRepositoryFactory repositoryFactory, IDialogService dialogService) 
+    public AddOrderViewModel(IRepositoryFactory repositoryFactory, DialogService dialogService) 
         : base(repositoryFactory.GetRepository<Order>(), "Add Order")
     {
         _repositoryFactory = repositoryFactory;

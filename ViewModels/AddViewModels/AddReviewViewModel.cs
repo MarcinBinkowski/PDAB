@@ -9,7 +9,7 @@ namespace PDAB.ViewModels
 public class AddReviewViewModel : BaseAddViewModel<Review>
 {
     private readonly IRepositoryFactory _repositoryFactory;
-    private readonly IDialogService _dialogService;
+    private readonly DialogService _dialogService;
     private ObservableCollection<Product> _products;
     private ObservableCollection<Customer> _customers;
 
@@ -33,7 +33,7 @@ public class AddReviewViewModel : BaseAddViewModel<Review>
         }
     }
 
-    public AddReviewViewModel(IRepositoryFactory repositoryFactory, IDialogService dialogService) 
+    public AddReviewViewModel(IRepositoryFactory repositoryFactory, DialogService dialogService) 
         : base(repositoryFactory.GetRepository<Review>(), "Add Review")
     {
         _repositoryFactory = repositoryFactory;

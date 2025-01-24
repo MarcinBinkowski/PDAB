@@ -10,7 +10,7 @@ namespace PDAB.ViewModels
     public class AddDiscountProductViewModel : BaseAddViewModel<DiscountProduct>
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IDialogService _dialogService;
+        private readonly DialogService _dialogService;
         private ObservableCollection<Product> _products;
         private ObservableCollection<Discount> _discounts;
 
@@ -36,7 +36,7 @@ namespace PDAB.ViewModels
 
         public AddDiscountProductViewModel(
             IRepositoryFactory repositoryFactory,
-            IDialogService dialogService) 
+            DialogService dialogService) 
             : base(repositoryFactory.GetRepository<DiscountProduct>(), "Add Discount Product")
         {
             _repositoryFactory = repositoryFactory;

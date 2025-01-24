@@ -1,0 +1,132 @@
+<UserControl x:Class="PDAB.Views.AddCustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:PDAB.Converters"
+             xmlns:helpers="clr-namespace:PDAB.Helpers">
+
+    <UserControl.Resources>
+        <converters:AllValidationPassedConverter x:Key="AllValidationPassedConverter"/>
+    </UserControl.Resources>
+    <materialDesign:Card Margin="16" Padding="32">
+        <StackPanel>
+            <TextBlock Text="{Binding DisplayName}"
+                      Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                      Margin="0,0,0,32"/>
+
+            <TextBlock Text="First Name" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox x:Name="FirstNameBox"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter first name"
+                    Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.FirstName" 
+                            UpdateSourceTrigger="PropertyChanged"
+                            NotifyOnValidationError="True"
+                            ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <helpers:NameValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Text="Last Name" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox x:Name="LastNameBox"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter last name"
+                    Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.LastName" 
+                            UpdateSourceTrigger="PropertyChanged"
+                            NotifyOnValidationError="True"
+                            ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <helpers:NameValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Text="Email" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox x:Name="EmailBox"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter email"
+                    Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.Email" 
+                            UpdateSourceTrigger="PropertyChanged"
+                            NotifyOnValidationError="True"
+                            ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <helpers:EmailValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Text="Phone" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox x:Name="PhoneBox"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    materialDesign:HintAssist.Hint="Enter phone number"
+                    Margin="0,8,0,16">
+                <TextBox.Text>
+                    <Binding Path="Entity.Phone" 
+                            UpdateSourceTrigger="PropertyChanged"
+                            NotifyOnValidationError="True"
+                            ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                            <helpers:PhoneNumberValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Text="Address" 
+                       Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            <TextBox x:Name="AddressBox"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     materialDesign:HintAssist.Hint="Enter address"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Height="80"
+                     Margin="0,8,0,32">
+                <TextBox.Text>
+                    <Binding Path="Entity.Address" 
+                             UpdateSourceTrigger="PropertyChanged"
+                             NotifyOnValidationError="True"
+                             ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <helpers:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <Button Command="{Binding SaveCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Right">
+                <Button.IsEnabled>
+                    <MultiBinding>
+                        <MultiBinding.Converter>
+                            <converters:AllValidationPassedConverter/>
+                        </MultiBinding.Converter>
+                        <Binding Path="(Validation.HasError)" ElementName="FirstNameBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="LastNameBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="EmailBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="PhoneBox"/>
+                        <Binding Path="(Validation.HasError)" ElementName="AddressBox"/>
+                    </MultiBinding>
+                </Button.IsEnabled>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSave" Margin="0,0,8,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </materialDesign:Card>
+</UserControl>
